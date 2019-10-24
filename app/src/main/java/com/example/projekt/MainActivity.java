@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private StronaGlowna fragmentStronaGlowna;
     private Spektakle fragmentSpektakle;
     private Wydarzenia fragmentWydarzenia;
-    private Aktualnosci fragmentAktualnosci;
+    private AktualnosciMini fragmentAktualnosci;
     private Bilety fragmentBilety;
     private Edukacja fragmentEdukacja;
     private Kontakt fragmentKontakt;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentStronaGlowna = new StronaGlowna();
         fragmentSpektakle = new Spektakle();
         fragmentWydarzenia = new Wydarzenia();
-        fragmentAktualnosci = new Aktualnosci();
+        fragmentAktualnosci = new AktualnosciMini();
         fragmentBilety = new Bilety();
         fragmentEdukacja = new Edukacja();
         fragmentKontakt = new Kontakt();
