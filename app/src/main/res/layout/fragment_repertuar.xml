@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tlo">
+
+    <ImageView
+        android:id="@+id/repertuarBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="203dp"
+        android:contentDescription="@string/repertuarbanner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/repertuar" />
+
+    <TextView
+        android:id="@+id/repertuar_tv1"
+        android:layout_width="115dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="164dp"
+        android:background="#D81C5C"
+        android:gravity="center"
+        android:text="@string/repertuar_tv1"
+        android:textColor="#FAFDFE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="#D71C5C"
+        android:minHeight="?attr/actionBarSize"
+        android:textSize="30sp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repertuarBanner"
+        app:tabIndicatorColor="#F9FCFD">
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="0dp"
+        android:layout_height="407dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tablayout">
+
+    </android.support.v4.view.ViewPager>
+
+</android.support.constraint.ConstraintLayout>

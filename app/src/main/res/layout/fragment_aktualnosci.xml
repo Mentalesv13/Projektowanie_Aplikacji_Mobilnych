@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tlo">
+
+    <ImageView
+        android:id="@+id/aktualnosciBanner"
+        android:layout_width="0dp"
+        android:layout_height="229dp"
+        android:contentDescription="@string/aktualnoscibanner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/teatrmuzyczny" />
+
+    <TextView
+        android:id="@+id/aktualnosci_tv1"
+        android:layout_width="115dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="164dp"
+        android:background="#D81C5C"
+        android:gravity="center"
+        android:text="@string/aktualnosci_tv1"
+        android:textColor="#FAFDFE"
+        app:layout_constraintEnd_toEndOf="@id/aktualnosciBanner"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.projekt.AktualnosciMini"
+        android:layout_width="0dp"
+        android:layout_height="504dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aktualnosciBanner"
+        tools:layout="@layout/fragment_aktualnoscimini" />
+
+</android.support.constraint.ConstraintLayout>

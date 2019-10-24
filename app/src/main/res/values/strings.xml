@@ -1,0 +1,152 @@
+<resources>
+    <string name="app_name">Projekt</string>
+    <string name="les_miserables">les_miserables</string>
+    <string name="menu_action_up">menu_action_up</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="MuzycznyŁódź">muzycznylodz</string>
+    <string name="projektlabel">Teatr Muzyczny Łódź</string>
+
+
+    <string name="kontakt_text">
+
+        kierownik\u000D\n<b>IWONA ROGOZIŃSKA - ZACHWIEJA</b>\u000D\nbow@teatr-muzyczny.lodz.pl\u000D\n\u000D\n<b>rezerwacja biletów</b>\u000D\nponiedziałek - piątek 8.00-16.00\u000D\ntel.: (42) 678 19 68\u000D\ntel./fax: (42) 678 34 98\u000D\nrezerwacja@teatr-muzyczny.lodz.pl\u000D\n\u000D\n<b>UWAGA!\nInformujemy, że w związku z problemami technicznymi\u000D\n nr tel.: (42) 678 19 68 jest nieczynny, w związku z tym, w sprawie rezerwacji i zakupu biletów prosimy o kontakt z Biurem Obsługi Widzów pod nr tel.: 507 248 564.\u000D\n\u000DPrzepraszamy za wszelkie utrudnienia.</b>
+    </string>
+    <string name="bilety_text">
+
+        <b>KASA BILETOWA</b>\u000D\ntel.: (42) 678 19 68\u000D\n\u000D\nKasa biletowa czynna w sezonie:\u000D\n\u000D\nponiedziałek - nieczynne\u000D\nwtorek - piątek 11.00 - 18.30 \n(przerwa 14.00 - 14.30)\u000D\nsobota 12.00 - 18.30\u000D\nniedziela 15.00 - 18.30\u000D\n\u000D\n<b>UWAGA!\nInformujemy, że w związku z problemami technicznymi\u000D\n nr tel.: (42) 678 19 68 jest nieczynny, w związku z tym, w sprawie rezerwacji i zakupu biletów prosimy o kontakt z Biurem Obsługi Widzów pod nr tel.: 507 248 564.\u000D\n\u000DPrzepraszamy za wszelkie utrudnienia.</b>
+</string>
+
+    <string name="ll1_tv2">     Drodzy Widzowie,\u000D\nw okresie weekendu majowego, tj. 1 i 3 maja  br., kasa biletowa Teatru Muzycznego w Łodzi będzie nieczynna.\u000D\n\Przepraszamy za utrudnienia.
+</string>
+    <string name="ll3_tv2">
+    Pierwszą nagrodę Jury przyznało Kindze Zygmunt, doceniając jej stylistyczną i interpretacyjną wokalną dojrzałość.\u000D\n
+        Drugą nagrodę otrzymał Karol Donda, a trzecie miejsce zajął Bartłomiej Wiater.
+    Nagrodą Specjalną Dyrektora Teatru Muzycznego w Łodzi wyróżniona została Katarzyna Hołyńska.\u000D\n\u000D\n
+
+    Serdecznie gratulujemy!
+    </string>
+
+    <string name="wydarzenia_misssaigon">
+    „Miss Saigon” jest jednym z tych musicali, które poruszają od pierwszych dźwięków muzyki. To niezwykła i tragiczna historia miłości, kolejny wielki przebój Claude`a-Michela Schönberga i Alaina Boublila, autorów „Les Misérables”.
+
+    \u000D\n\u000D\nAkcja „Miss Saigon” rozpoczyna się w 1975 roku, w czasie wojny w Wietnamie, kiedy konflikty kulturowe i ideologiczne świata wydawały się w gwałtowny sposób koncentrować w jednym mieście – Sajgonie. Chris, amerykański żołnierz, zakochuje się z wzajemnością w Kim, wietnamskiej sierocie, kelnerce w barze i prostytutce. Upadek Sajgonu ich rozdziela – Chris w Stanach Zjednoczonych rozpoczyna nowe życie, Kim rodzi chłopca i czeka na powrót ukochanego, żyjąc w nędzy, poniżeniu i strachu. Gdy Chris dowiaduje się, że jest ojcem dziecka Kim, postanawia wrócić na Wschód i zmierzyć się z przeszłością.
+
+    \u000D\n\u000D\n„Miss Saigon” zwana jest współczesną wersją „Madame Butterfly”, autorzy twierdzą jednak, że inspiracją dla nich nie była opera Pucciniego, a zdjęcie, które Claude-Michel Schönberg przypadkiem zobaczył w gazecie. Przedstawiało ono wietnamską kobietę, która ze ściągniętą bólem twarzą oddaje swoją córkę żołnierzowi opuszczającemu bazę wojskową pod Sajgonem. W Ameryce dziecko czekało lepsze życie niż to dane innym bui doi, dzieciom Wietnamek i Amerykanów, prześladowanym w komunistycznym Wietnamie. Dzięki temu zdjęciu powstał przejmujący, jeden z najpiękniejszych musicali wszech czasów.
+
+    \u000D\n\u000D\nPrapremiera odbyła się na West Endzie w Londynie w 1989 roku. Musical grany był tam przez dziesięć lat, kolejne dziesięć grany był na Broadwayu w Nowym Jorku – w sumie dano ponad osiem tysięcy trzysta przedstawień. Dwadzieścia pięć lat po premierze, w maju 2014 roku, na West Endzie odbyła się premiera nowej wersji i tę pokaże Teatr Muzyczny w Łodzi.
+
+    \u000D\n\u000D\n„Miss Saigon”, obsypana prestiżowymi nagrodami, została wystawiona w dwudziestu pięciu krajach w dwunastu językach.
+
+    \u000D\n\u000D\n<b>Premiera - 8 czerwca 2019r.</b>
+    \u000D\n<b>Bilety już w sprzedaży!</b>
+
+    \u000D\n\u000D\n<b>Zapraszamy na www.miss-saigon.pl</b>
+    </string>
+    <string name="facebookicon">facebookIcon</string>
+    <string name="twittericon">twitterIcon</string>
+    <string name="instagramicon">instagramIcon</string>
+    <string name="pinteresticon">pinterestIcon</string>
+    <string name="aktualnosci_tv1">AKTUALNOŚCI</string>
+    <string name="aktualnoscibanner">aktualnosciBanner</string>
+    <string name="aktualnoscimini_tv1">AKTUALNOŚCI</string>
+    <string name="clockicon">clockIcon</string>
+    <string name="aktualnoscimini_ll_tv1">PRACA KASY BILETOWEJ W OKRESIE WEEKENDU MAJOWEGO</string>
+    <string name="aktualnoscimini_ll2_tv1">WYNIKI PLEBISCYTU OFF-PÓŁNOCNA</string>
+    <string name="aktualnoscimini_ll2_tv2">Drodzy Widzowie, poniżej przedstawiamy wyniki plebiscytu OFF-Północna! - za najlepsze festiwalowe wydarzenie uznaliście spektakl „Tam, gdzie wzrok nie sięga – СВІТ ЗА OЧІ” wystawiony przez Teatr Navpaky Театр Навпаки. - w kategorii „największa osobowość Festiwalu” triumfuje Oksana Terefenko – reżyserka, autorka scenariusza i scenografii oraz aktorka spektaklu Teatru Navpaky, a także wokalistka zespołu Coolбаба. Gratulujemy!</string>
+    <string name="aktualnoscimini_ll3_tv1">LAUREACI KONKURSU PIOSENKI AKTORSKIEJ!</string>
+    <string name="megaphoneicon">megaphoneIcon</string>
+    <string name="messageicon">messageIcon</string>
+    <string name="arrowup">arrowup</string>
+    <string name="arrowdown">arrowdown</string>
+    <string name="biletybanner">biletyBanner</string>
+    <string name="bilety_tv1">BILETY</string>
+    <string name="edukacja_tv1">EDUKACJA</string>
+    <string name="edukacjabanner">edukacjaBanner</string>
+    <string name="kontakt_tv1">KONTAKT</string>
+    <string name="kontaktbanner">kontaktBanner</string>
+    <string name="menu_aktualnosci">AKTUALNOŚCI</string>
+    <string name="menu_repertuar">REPERTUAR</string>
+    <string name="menu_spektakle">SPEKTAKLE</string>
+    <string name="menu_wydarzenia">WYDARZENIA</string>
+    <string name="menu_bilety">BILETY</string>
+    <string name="menu_kontakt">KONTAKT</string>
+    <string name="repertuar_tv1">REPERTUAR</string>
+    <string name="repertuarbanner">repertuarBanner</string>
+    <string name="spektakle_tv1">SPEKTAKLE</string>
+    <string name="spektakle_ll_tv1">MISS SAIGON</string>
+    <string name="premiera">premiera:</string>
+    <string name="ll1_tv3">8 czerwca 2019</string>
+    <string name="obsada">OBSADA</string><string name="ll1_tv4">x</string><string name="spektakle_ll1_tv4">x</string><string name="spektakle_ll1_tv6">x</string>
+</resources>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tlo"
+    android:theme="@android:style/Theme.NoTitleBar"
+    tools:context=".MainActivity">
+
+
+    <View
+        android:id="@+id/blackView"
+        android:layout_width="288dp"
+        android:layout_height="76dp"
+        android:background="@android:color/background_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:id="@+id/logo"
+        android:layout_width="125dp"
+        android:layout_height="76dp"
+        android:background="@drawable/logo"
+        android:onClick="glownaButton"
+        app:layout_constraintEnd_toStartOf="@+id/blackView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/menux"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/menux"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/blackView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/menu"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/menu"
+        app:layout_constraintEnd_toEndOf="@+id/blackView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/fragment_switch"
+        android:name="com.example.projekt.Blank"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        tools:layout="@layout/fragment_blank" />
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gl1"
+        android:layout_width="30dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_switch">
+
+        <ImageView
+            android:id="@+id/facebookIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="0.1dp"
+            android:contentDescription="@string/facebookicon"
+            android:onClick="facebookButton"
+            app:srcCompat="@drawable/facebook" />
+
+        <ImageView
+            android:id="@+id/twitterIcon"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="0.1dp"
+            android:contentDescription="@string/twittericon"
+            android:onClick="twitterButton"
+            app:layout_column="0"
+            app:layout_row="1"
+            app:srcCompat="@drawable/twitter" />
+
+        <ImageView
+            android:id="@+id/instagramIcon"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="0.1dp"
+            android:contentDescription="@string/instagramicon"
+            android:onClick="instagramButton"
+            app:layout_column="0"
+            app:layout_row="2"
+            app:srcCompat="@drawable/instagram" />
+
+        <ImageView
+            android:id="@+id/pinterestIcon"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:contentDescription="@string/pinteresticon"
+            android:onClick="pinterestButton"
+            android:paddingStart="0.1dp"
+            android:paddingEnd="0dp"
+            app:layout_column="0"
+            app:layout_row="3"
+            app:srcCompat="@drawable/pinterest" />
+
+    </android.support.v7.widget.GridLayout>
+
+
+</android.support.constraint.ConstraintLayout>

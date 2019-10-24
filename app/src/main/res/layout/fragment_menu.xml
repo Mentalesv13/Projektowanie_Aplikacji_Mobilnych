@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/tlo"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="617dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:background="#AAAAA8"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonRepertuar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/black"
+                android:onClick="reperturarButton"
+                android:text="@string/menu_repertuar"
+                android:textColor="#AEB0B2" />
+
+            <Button
+                android:id="@+id/buttonSpektakle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/black"
+                android:onClick="spektakleButton"
+                android:text="@string/menu_spektakle"
+                android:textColor="#AEB0B2" />
+
+            <Button
+                android:id="@+id/buttonWydarzenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/black"
+                android:onClick="wydarzeniaButton"
+                android:text="@string/menu_wydarzenia"
+                android:textColor="#AEB0B2" />
+
+            <Button
+                android:id="@+id/buttonAktualnosci"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/black"
+                android:onClick="aktualnosciButton"
+                android:text="@string/menu_aktualnosci"
+                android:textColor="#AEB0B2" />
+
+            <Button
+                android:id="@+id/buttonBilety"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/black"
+                android:onClick="biletyButton"
+                android:text="@string/menu_bilety"
+                android:textColor="#AEB0B2" />
+
+            <Button
+                android:id="@+id/buttonKontakt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/black"
+                android:onClick="kontaktButton"
+                android:text="@string/menu_kontakt"
+                android:textColor="#AEB0B2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

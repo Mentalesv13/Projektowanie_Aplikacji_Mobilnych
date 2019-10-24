@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/tlo">
+
+    <ImageView
+        android:id="@+id/kontaktBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="203dp"
+        android:contentDescription="@string/kontaktbanner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/kontakt" />
+
+    <TextView
+        android:id="@+id/kontakt_tv1"
+        android:layout_width="115dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="164dp"
+        android:background="#D81C5C"
+        android:gravity="center"
+        android:text="@string/kontakt_tv1"
+        android:textColor="#FAFDFE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/kontakt_tv2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/anaheim"
+        android:gravity="center_horizontal"
+        android:text="@string/kontakt_text"
+        android:textColor="@android:color/background_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kontakt_tv1" />
+
+</android.support.constraint.ConstraintLayout>
