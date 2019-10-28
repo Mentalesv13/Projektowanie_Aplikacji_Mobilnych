@@ -1,10 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ABABA9">
@@ -67,7 +66,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="MISS SAIGON - PREMIERA"
                                 android:textAlignment="viewStart"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
                             <LinearLayout
@@ -157,14 +156,14 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="112dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/ll2_tv1"
-                                android:layout_width="match_parent"
+                                android:layout_width="112dp"
                                 android:layout_height="wrap_content"
                                 android:gravity="bottom|center_horizontal"
                                 android:text="9"

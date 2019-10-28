@@ -9,13 +9,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="594dp"
+        android:layout_height="match_parent"
         android:background="@color/tlo"
         app:layout_constraintStart_toStartOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             tools:visibility="visible">
 
@@ -37,8 +37,8 @@
                 android:layout_height="29dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="164dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginTop="144dp"
+                android:layout_marginEnd="2dp"
                 android:background="#D81C5C"
                 android:gravity="center"
                 android:text="@string/spektakle_tv1"
@@ -50,18 +50,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/spektakleBanner"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/tlo"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="398dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -96,7 +92,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/spektakle_ll_tv1"
                                     android:textAlignment="viewStart"
-                                    android:textSize="18sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -108,7 +104,8 @@
                                         android:id="@+id/ll1_tv2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/premiera" />
+                                        android:text="@string/premiera"
+                                        android:textSize="12sp" />
 
                                     <TextView
                                         android:id="@+id/ll1_tv3"
@@ -117,15 +114,17 @@
                                         android:layout_marginTop="0dp"
                                         android:text="@string/ll1_tv3"
                                         android:textColor="#D71C5C"
+                                        android:textSize="12sp"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
 
                                 <TextView
                                     android:id="@+id/ll1_tv4"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="75dp"
-                                    android:text="Teatr Muzyczny w Łodzi oraz CAMERON MACKINTOSH przedstawiają nową inscenizację dzieła BOUBLILA\u000D\n i SCHÖNBERGA MISS SAIGON" />
+                                    android:text="Teatr Muzyczny w Łodzi oraz CAMERON MACKINTOSH przedstawiają nową inscenizację dzieła BOUBLILA\u000D\n i SCHÖNBERGA MISS SAIGON"
+                                    android:textSize="10sp" />
 
                             </LinearLayout>
 
@@ -207,7 +206,7 @@
                                 app:srcCompat="@drawable/madagaskar2" />
 
                             <LinearLayout
-                                android:layout_width="297dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
 
@@ -217,11 +216,11 @@
                                     android:layout_height="wrap_content"
                                     android:text="MADAGASKAR - MUSICALOWA PRZYGODA"
                                     android:textAlignment="viewStart"
-                                    android:textSize="18sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="205dp"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
 
@@ -229,7 +228,8 @@
                                         android:id="@+id/ll2_tv2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/premiera" />
+                                        android:text="@string/premiera"
+                                        android:textSize="12sp" />
 
                                     <TextView
                                         android:id="@+id/ll2_tv3"
@@ -238,6 +238,7 @@
                                         android:layout_marginTop="0dp"
                                         android:text="6 października 2018"
                                         android:textColor="#D71C5C"
+                                        android:textSize="12sp"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -246,7 +247,8 @@
                                     android:id="@+id/ll2_tv4"
                                     android:layout_width="match_parent"
                                     android:layout_height="158dp"
-                                    android:text="Udaj się z nami w pełną przygód, musicalową podróż! Światowa premiera musicalu, opartego na znakomitym filmie wytwórni DreamWorks, odbyła się w Stanach Zjednoczonych w 2016 roku. Premierę łódzkiego „Madagaskaru” zaplanowano \u000D\nna 6 października 2018 roku. Spektakl wyreżyseruje Jakub Szydłowski." />
+                                    android:text="Udaj się z nami w pełną przygód, musicalową podróż! Światowa premiera musicalu, opartego na znakomitym filmie wytwórni DreamWorks, odbyła się w Stanach Zjednoczonych w 2016 roku. Premierę łódzkiego „Madagaskaru” zaplanowano \u000D\nna 6 października 2018 roku. Spektakl wyreżyseruje Jakub Szydłowski."
+                                    android:textSize="11sp" />
 
                             </LinearLayout>
 
@@ -330,17 +332,17 @@
                                 app:srcCompat="@drawable/jcs" />
 
                             <LinearLayout
-                                android:layout_width="297dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/ll3_tv1"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="204dp"
                                     android:layout_height="wrap_content"
                                     android:text=" JESUS CHRIST SUPERSTAR"
                                     android:textAlignment="viewStart"
-                                    android:textSize="18sp"
+                                    android:textSize="14sp"
                                     android:textStyle="bold" />
 
                                 <LinearLayout
@@ -352,7 +354,8 @@
                                         android:id="@+id/ll3_tv2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/premiera" />
+                                        android:text="@string/premiera"
+                                        android:textSize="12sp" />
 
                                     <TextView
                                         android:id="@+id/ll3_tv3"
@@ -361,6 +364,7 @@
                                         android:layout_marginTop="0dp"
                                         android:text="4 października 2014"
                                         android:textColor="#D71C5C"
+                                        android:textSize="12sp"
                                         android:textStyle="bold" />
 
                                 </LinearLayout>
@@ -368,8 +372,9 @@
                                 <TextView
                                     android:id="@+id/ll3_tv4"
                                     android:layout_width="match_parent"
-                                    android:layout_height="158dp"
-                                    android:text="Kim jest Jezus - człowiekiem czy bogiem, szaleńcem czy charyzmatyczną postacią? Dla wyznawców nauczyciel, dla Judasza przyjaciel, dla Marii Magdaleny - mężczyzna. Webber \u000D\ni Rice odważnie zderzyli tematykę biblijną \u000D\nz klimatem rocka, zadając wiele pytań, na które ciągle poszukuje się odpowiedzi." />
+                                    android:layout_height="wrap_content"
+                                    android:text="Kim jest Jezus - człowiekiem czy bogiem, szaleńcem czy charyzmatyczną postacią? Dla wyznawców nauczyciel, dla Judasza przyjaciel, dla Marii Magdaleny - mężczyzna. Webber \u000D\ni Rice odważnie zderzyli tematykę biblijną \u000D\nz klimatem rocka, zadając wiele pytań, na które ciągle poszukuje się odpowiedzi."
+                                    android:textSize="11sp" />
 
                             </LinearLayout>
 
@@ -433,11 +438,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/tlo"
-                    android:orientation="horizontal"></LinearLayout>
             </LinearLayout>
 
         </RelativeLayout>

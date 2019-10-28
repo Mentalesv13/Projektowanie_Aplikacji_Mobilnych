@@ -19,7 +19,7 @@
         android:id="@+id/repertuar_tv1"
         android:layout_width="115dp"
         android:layout_height="29dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="140dp"
         android:background="#D81C5C"
         android:gravity="center"
         android:text="@string/repertuar_tv1"
@@ -45,7 +45,8 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="0dp"
-        android:layout_height="407dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tablayout">

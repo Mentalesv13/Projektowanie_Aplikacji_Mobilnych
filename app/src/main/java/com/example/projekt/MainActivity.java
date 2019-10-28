@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-
     private Button menuButton;
     private Button menuX;
     private FragmentTransaction fragmentTransaction;
@@ -23,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private Wydarzenia fragmentWydarzenia;
     private AktualnosciMini fragmentAktualnosci;
     private Bilety fragmentBilety;
-    private Edukacja fragmentEdukacja;
     private Kontakt fragmentKontakt;
     private Menu fragmentMenu;
 
@@ -41,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentWydarzenia = new Wydarzenia();
         fragmentAktualnosci = new AktualnosciMini();
         fragmentBilety = new Bilety();
-        fragmentEdukacja = new Edukacja();
         fragmentKontakt = new Kontakt();
         fragmentMenu = new Menu();
         setFragment(fragmentStronaGlowna);
@@ -65,8 +62,6 @@ public class MainActivity extends AppCompatActivity {
        }
        });
     }
-
-
 
     public void glownaButton(View v){
         setFragment(fragmentStronaGlowna);
@@ -105,12 +100,7 @@ public class MainActivity extends AppCompatActivity {
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
     }
-    public void edukacjaButton(View v)
-    {
-        setFragment(fragmentEdukacja);
-        menuButton.setVisibility(View.VISIBLE);
-        menuX.setVisibility(View.INVISIBLE);
-    }
+
     public void kontaktButton(View v)
     {
         setFragment(fragmentKontakt);

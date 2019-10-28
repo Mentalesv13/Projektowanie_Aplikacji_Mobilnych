@@ -8,14 +8,15 @@
 
     <ScrollView
         android:layout_width="0dp"
-        android:layout_height="360dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
@@ -43,15 +44,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="12dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/tlo"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="386dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
@@ -75,7 +68,9 @@
                             android:id="@+id/ll1_tv1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginTop="12dp"
+                            android:layout_marginRight="12dp"
                             android:text="@string/aktualnoscimini_ll_tv1"
                             android:textAlignment="viewStart"
                             android:textColor="@android:color/black"
@@ -86,7 +81,9 @@
                             android:id="@+id/ll1_tv2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:layout_marginBottom="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/ll1_tv2" />
@@ -115,7 +112,9 @@
                             android:id="@+id/ll2_tv1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginTop="12dp"
+                            android:layout_marginRight="12dp"
                             android:text="@string/aktualnoscimini_ll2_tv1"
                             android:textAlignment="viewStart"
                             android:textColor="@android:color/black"
@@ -126,7 +125,9 @@
                             android:id="@+id/ll2_tv2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
                             android:layout_marginBottom="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/aktualnoscimini_ll2_tv2" />
@@ -155,6 +156,7 @@
                             android:id="@+id/ll3_tv1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginTop="12dp"
                             android:text="@string/aktualnoscimini_ll3_tv1"
                             android:textAlignment="viewStart"
@@ -166,6 +168,7 @@
                             android:id="@+id/ll3_tv2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginBottom="8dp"
                             android:maxLines="3"
@@ -196,14 +199,6 @@
                             android:visibility="gone" />
 
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="12dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/tlo"
-                    android:orientation="horizontal">
-
                 </LinearLayout>
 
             </LinearLayout>
