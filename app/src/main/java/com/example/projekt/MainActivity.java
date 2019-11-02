@@ -1,7 +1,10 @@
 package com.example.projekt;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,45 +13,83 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     private Button menuButton;
+    private View logoButton;
+    private Button reloadButton;
     private Button menuX;
+    private ImageView instagramButton;
+    private ImageView facebookButton;
+    private ImageView twitterButton;
+    private ImageView pinterestButton;
+
     private FragmentTransaction fragmentTransaction;
 
+    private Fragment fragmentCache;
     private Repertuar fragmentRepertuar;
-    private StronaGlowna fragmentStronaGlowna;
-    private Spektakle fragmentSpektakle;
+    public StronaGlowna fragmentStronaGlowna;
+    private SpektakleView fragmentSpektakle;
     private Wydarzenia fragmentWydarzenia;
     private AktualnosciMini fragmentAktualnosci;
     private Bilety fragmentBilety;
     private Kontakt fragmentKontakt;
     private Menu fragmentMenu;
-
+    private InternetConnection fragmentInternetConnection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         menuButton = (Button) findViewById(R.id.menu);
+        reloadButton = (Button) findViewById(R.id.reload);
         menuX = (Button) findViewById(R.id.menux);
+        pinterestButton = (ImageView) findViewById(R.id.facebookIcon);
+        facebookButton = (ImageView) findViewById(R.id.pinterestIcon);
+        twitterButton = (ImageView) findViewById(R.id.twitterIcon);
+        instagramButton = (ImageView) findViewById(R.id.instagramIcon);
+        logoButton = (View) findViewById(R.id.logo);
 
         fragmentRepertuar = new Repertuar();
         fragmentStronaGlowna = new StronaGlowna();
-        fragmentSpektakle = new Spektakle();
+        fragmentSpektakle = new SpektakleView();
         fragmentWydarzenia = new Wydarzenia();
         fragmentAktualnosci = new AktualnosciMini();
         fragmentBilety = new Bilety();
         fragmentKontakt = new Kontakt();
         fragmentMenu = new Menu();
-        setFragment(fragmentStronaGlowna);
+        fragmentInternetConnection = new InternetConnection();
+
+        fragmentCache = fragmentStronaGlowna;
+        setFragment(fragmentCache);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentStronaGlowna.viewFlipper.stopFlipping();
                 menuButton.setVisibility(View.INVISIBLE);
+                pinterestButton.setVisibility(View.INVISIBLE);
+                facebookButton.setVisibility(View.INVISIBLE);
+                twitterButton.setVisibility(View.INVISIBLE);
+                instagramButton.setVisibility(View.INVISIBLE);
+
                 menuX.setVisibility(View.VISIBLE);
-                setFragment(fragmentMenu);
+                fragmentCache = fragmentMenu;
+                setFragment(fragmentCache);
+            }
+        });
+
+        reloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                menuButton.setVisibility(View.INVISIBLE);
+                pinterestButton.setVisibility(View.INVISIBLE);
+                facebookButton.setVisibility(View.INVISIBLE);
+                twitterButton.setVisibility(View.INVISIBLE);
+                instagramButton.setVisibility(View.INVISIBLE);
+
+                menuX.setVisibility(View.VISIBLE);
+                setFragment(fragmentCache);
             }
         });
 
@@ -64,51 +105,56 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void glownaButton(View v){
-        setFragment(fragmentStronaGlowna);
+        fragmentCache = fragmentStronaGlowna;
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
-        fragmentStronaGlowna.viewFlipper.startFlipping();
+        setFragment(fragmentCache);
+        //fragmentStronaGlowna.viewFlipper.startFlipping();
     }
 
     public void reperturarButton(View v)
     {
-        setFragment(fragmentRepertuar);
+        fragmentCache = fragmentRepertuar;
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
+        setFragment(fragmentRepertuar);
     }
     public void spektakleButton(View v)
     {
-        setFragment(fragmentSpektakle);
+        fragmentCache = fragmentSpektakle;
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
+        setFragment(fragmentSpektakle);
     }
     public void wydarzeniaButton(View v)
     {
-        setFragment(fragmentWydarzenia);
+        fragmentCache = fragmentWydarzenia;
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
+        setFragment(fragmentWydarzenia);
     }
     public void aktualnosciButton(View v)
     {
-        setFragment(fragmentAktualnosci);
+        fragmentCache = fragmentAktualnosci;
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
+        setFragment(fragmentAktualnosci);
     }
     public void biletyButton(View v)
     {
-        setFragment(fragmentBilety);
+        fragmentCache = fragmentBilety;
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
+        setFragment(fragmentBilety);
     }
 
     public void kontaktButton(View v)
     {
-        setFragment(fragmentKontakt);
+        fragmentCache = fragmentKontakt;
         menuButton.setVisibility(View.VISIBLE);
         menuX.setVisibility(View.INVISIBLE);
+        setFragment(fragmentKontakt);
     }
-
-
 
     public void facebookButton(View v){
         Intent browserIntent = new Intent(
@@ -139,12 +185,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFragment(Fragment fragment) {
-        FragmentManager fm = getSupportFragmentManager();
-        fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right);
-        fragmentTransaction.replace(R.id.fragment_switch, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.setCustomAnimations(0,0);
-        fragmentTransaction.commit();
+        if (checkNetworkConnection() == true) {
+            buttonShow();
+            logoButton.setClickable(true);
+            reloadButton.setVisibility(View.INVISIBLE);
+            menuButton.setVisibility(View.VISIBLE);
+
+
+            FragmentManager fm = getSupportFragmentManager();
+            fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            fragmentTransaction.replace(R.id.fragment_switch, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setCustomAnimations(0, 0);
+            fragmentTransaction.commit();
+        } else {
+            noInternetConnection();
+            FragmentManager fm = getSupportFragmentManager();
+            fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+            fragmentTransaction.replace(R.id.fragment_switch, fragmentInternetConnection);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setCustomAnimations(0, 0);
+            fragmentTransaction.commit();
+        }
+    }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected())
+        {
+            return true;
+        }
+        else return false;
+    }
+
+    public void noInternetConnection(){
+        buttonHide();
+        menuButton.setVisibility(View.INVISIBLE);
+        menuX.setVisibility(View.INVISIBLE);
+        logoButton.setClickable(false);
+        reloadButton.setVisibility(View.VISIBLE);
+    }
+    public void buttonShow(){
+        pinterestButton.setVisibility(View.VISIBLE);
+        facebookButton.setVisibility(View.VISIBLE);
+        twitterButton.setVisibility(View.VISIBLE);
+        instagramButton.setVisibility(View.VISIBLE);
+    }
+    public void buttonHide(){
+        pinterestButton.setVisibility(View.INVISIBLE);
+        facebookButton.setVisibility(View.INVISIBLE);
+        twitterButton.setVisibility(View.INVISIBLE);
+        instagramButton.setVisibility(View.INVISIBLE);
     }
 }

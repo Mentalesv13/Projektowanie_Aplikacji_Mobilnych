@@ -1,17 +1,40 @@
 package com.example.projekt;
 
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+public class Spektakle {
+    private int SpektaklId;
+    private String desc;
+    private String name;
+    private String date;
 
-public class Spektakle extends Fragment {
+    public int getSpektaklId() {
+        return SpektaklId;
+    }
 
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void setSpektaklId(int spektaklId) {
+        SpektaklId = spektaklId;
+    }
 
-        return inflater.inflate(R.layout.fragment_spektakle, container, false);
+    public String getDesc() {
+        return desc;
+    }
 
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

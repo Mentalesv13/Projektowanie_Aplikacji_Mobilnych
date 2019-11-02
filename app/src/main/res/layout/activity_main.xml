@@ -50,6 +50,17 @@
         app:layout_constraintEnd_toEndOf="@+id/blackView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/reload"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/reload"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/blackView"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <fragment
         android:id="@+id/fragment_switch"
         android:name="com.example.projekt.Blank"

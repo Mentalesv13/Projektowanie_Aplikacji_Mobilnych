@@ -148,5 +148,10 @@
     <string name="spektakle_ll_tv1">MISS SAIGON</string>
     <string name="premiera">premiera:</string>
     <string name="ll1_tv3">8 czerwca 2019</string>
-    <string name="obsada">OBSADA</string><string name="ll1_tv4">x</string><string name="spektakle_ll1_tv4">x</string><string name="spektakle_ll1_tv6">x</string>
+    <string name="obsada">OBSADA</string>
+    <string name="ll1_tv4">x</string>
+    <string name="spektakle_ll1_tv4">x</string>
+    <string name="spektakle_ll1_tv6">x</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
