@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projekt">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <application android:hardwareAccelerated="true"
+    <application
+        android:name="com.example.projekt.login.RequestManager"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/projektlabel"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".login.HomeActivity"></activity>
+        <activity android:name=".LoginPanel" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -21,6 +28,28 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".login.LoginActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".login.RegisterActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".login.LoginActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.projekt.login.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".login.EmailVerify"
+            android:label="@string/app_name"
+            android:parentActivityName=".login.LoginActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.projekt.login.LoginActivity" />
         </activity>
     </application>
 

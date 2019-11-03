@@ -15,6 +15,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.projekt.fragment.AktualnosciMini;
+import com.example.projekt.fragment.Bilety;
+import com.example.projekt.fragment.InternetConnection;
+import com.example.projekt.fragment.Kontakt;
+import com.example.projekt.fragment.Menu;
+import com.example.projekt.fragment.Repertuar;
+import com.example.projekt.fragment.SpektakleView;
+import com.example.projekt.fragment.StronaGlowna;
+import com.example.projekt.fragment.Wydarzenia;
+import com.example.projekt.login.LoginActivity;
+
 public class MainActivity extends AppCompatActivity {
     private Button menuButton;
     private View logoButton;
@@ -24,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView facebookButton;
     private ImageView twitterButton;
     private ImageView pinterestButton;
+    private Button loginButton;
 
     private FragmentTransaction fragmentTransaction;
 
@@ -50,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         twitterButton = (ImageView) findViewById(R.id.twitterIcon);
         instagramButton = (ImageView) findViewById(R.id.instagramIcon);
         logoButton = (View) findViewById(R.id.logo);
+        loginButton = (Button) findViewById(R.id.bLogin);
 
         fragmentRepertuar = new Repertuar();
         fragmentStronaGlowna = new StronaGlowna();
@@ -76,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
                 menuX.setVisibility(View.VISIBLE);
                 fragmentCache = fragmentMenu;
                 setFragment(fragmentCache);
+            }
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(myIntent);
             }
         });
 
@@ -188,9 +209,13 @@ public class MainActivity extends AppCompatActivity {
         if (checkNetworkConnection() == true) {
             buttonShow();
             logoButton.setClickable(true);
-            reloadButton.setVisibility(View.INVISIBLE);
-            menuButton.setVisibility(View.VISIBLE);
+            if (fragmentCache==fragmentMenu){
+                menuX.setVisibility(View.VISIBLE);
+            }
+            else
+                menuButton.setVisibility(View.VISIBLE);
 
+            reloadButton.setVisibility(View.INVISIBLE);
 
             FragmentManager fm = getSupportFragmentManager();
             fragmentTransaction = fm.beginTransaction();
