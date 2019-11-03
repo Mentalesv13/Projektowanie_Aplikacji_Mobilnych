@@ -11,7 +11,6 @@ public class InternetConnection extends Fragment {
 
     public View onCreateView(LayoutInflater inflater,ViewGroup container,
                              Bundle savedInstanceState) {
-        //((MainActivity)getActivity()).setFragment(MainActivity.fragmentStronaGlowna);
         return inflater.inflate(R.layout.fragment_internet_connection, container, false);
 
     }
