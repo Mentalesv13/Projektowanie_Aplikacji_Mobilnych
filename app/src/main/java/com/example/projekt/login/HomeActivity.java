@@ -1,8 +1,11 @@
 package com.example.projekt.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -154,15 +157,20 @@ public class HomeActivity extends AppCompatActivity {
                         b.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String email = user.get("email");
-                                String old_pass = oldPassword.getText().toString();
-                                String new_pass = newPassword.getText().toString();
+                                if (checkNetworkConnection() == true) {
+                                    String email = user.get("email");
+                                    String old_pass = oldPassword.getText().toString();
+                                    String new_pass = newPassword.getText().toString();
 
-                                if (!old_pass.isEmpty() && !new_pass.isEmpty()) {
-                                    changePassword(email, old_pass, new_pass);
-                                    dialog.dismiss();
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Fill all values!", Toast.LENGTH_SHORT).show();
+                                    if (!old_pass.isEmpty() && !new_pass.isEmpty()) {
+                                        changePassword(email, old_pass, new_pass);
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Fill all values!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else {
+                                    noInternetConnectionDialog();
                                 }
                             }
                         });
@@ -262,6 +270,59 @@ public class HomeActivity extends AppCompatActivity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    private void noInternetConnectionDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_internet_connection, null);
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("NoInternetConnection");
+        dialogBuilder.setCancelable(false);
+
+        //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);
+
+        dialogBuilder.setPositiveButton("Reload",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // empty
+            }
+        });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setEnabled(true);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (checkNetworkConnection()==true) {
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected())
+        {
+            return true;
+        }
+        else return false;
     }
 
 }

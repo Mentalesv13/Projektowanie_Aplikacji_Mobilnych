@@ -2,11 +2,17 @@ package com.example.projekt.login;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -32,11 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Akshay Raj on 06-02-2017.
- * akshay@snowcorp.org
- * www.snowcorp.org
- */
 public class EmailVerify extends AppCompatActivity {
     private static final String TAG = EmailVerify.class.getSimpleName();
 
@@ -290,4 +291,58 @@ public class EmailVerify extends AppCompatActivity {
         super.onResume();
         countDown();
     }
+
+    private void noInternetConnectionDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_internet_connection, null);
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("NoInternetConnection");
+        dialogBuilder.setCancelable(false);
+
+        //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);
+
+        dialogBuilder.setPositiveButton("Reload",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // empty
+            }
+        });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setEnabled(true);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (checkNetworkConnection()==true) {
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected())
+        {
+            return true;
+        }
+        else return false;
+    }
+
 }

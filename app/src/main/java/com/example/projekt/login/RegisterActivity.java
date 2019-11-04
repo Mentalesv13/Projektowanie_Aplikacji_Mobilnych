@@ -1,10 +1,16 @@
 package com.example.projekt.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -60,25 +66,25 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                // Hide Keyboard
-                //Functions.hideSoftKeyboard(RegisterActivity.this);
+                if (checkNetworkConnection() == true) {
+                    String name = inputName.getText().toString().trim();
+                    String email = inputEmail.getText().toString().trim();
+                    String password = inputPassword.getText().toString().trim();
 
-                String name = inputName.getText().toString().trim();
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-
-                // Check for empty data in the form
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    if (Functions.isValidEmailAddress(email)) {
-                        registerUser(name, email, password);
+                    // Check for empty data in the form
+                    if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                        if (Functions.isValidEmailAddress(email)) {
+                            registerUser(name, email, password);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Email is not valid!", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Email is not valid!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Please enter your details!", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please enter your details!", Toast.LENGTH_LONG).show();
+                    noInternetConnectionDialog();
                 }
             }
-
         });
 
         // Link to Register Screen
@@ -169,5 +175,58 @@ public class RegisterActivity extends AppCompatActivity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    private void noInternetConnectionDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_internet_connection, null);
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("NoInternetConnection");
+        dialogBuilder.setCancelable(false);
+
+        //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);
+
+        dialogBuilder.setPositiveButton("Reload",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // empty
+            }
+        });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setEnabled(true);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (checkNetworkConnection()==true) {
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected())
+        {
+            return true;
+        }
+        else return false;
     }
 }
