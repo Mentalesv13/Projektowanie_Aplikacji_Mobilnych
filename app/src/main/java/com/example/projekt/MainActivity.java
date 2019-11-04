@@ -27,21 +27,15 @@ import com.example.projekt.fragment.Wydarzenia;
 import com.example.projekt.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private Button menuButton;
+    private Button menuButton, reloadButton, menuX, loginButton;
     private View logoButton;
-    private Button reloadButton;
-    private Button menuX;
-    private ImageView instagramButton;
-    private ImageView facebookButton;
-    private ImageView twitterButton;
-    private ImageView pinterestButton;
-    private Button loginButton;
+    private ImageView instagramButton, facebookButton, twitterButton, pinterestButton;
 
     private FragmentTransaction fragmentTransaction;
 
     private Fragment fragmentCache;
     private Repertuar fragmentRepertuar;
-    public StronaGlowna fragmentStronaGlowna;
+    private StronaGlowna fragmentStronaGlowna;
     private SpektakleView fragmentSpektakle;
     private Wydarzenia fragmentWydarzenia;
     private AktualnosciMini fragmentAktualnosci;
@@ -49,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Kontakt fragmentKontakt;
     private Menu fragmentMenu;
     private InternetConnection fragmentInternetConnection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

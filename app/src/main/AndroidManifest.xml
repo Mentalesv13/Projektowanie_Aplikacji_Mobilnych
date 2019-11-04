@@ -19,7 +19,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".login.HomeActivity"></activity>
-        <activity android:name=".LoginPanel" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

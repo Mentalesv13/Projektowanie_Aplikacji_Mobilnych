@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import com.example.projekt.MainActivity;
 import com.example.projekt.R;
 import com.example.projekt.helper.DatabaseHandler;
@@ -430,5 +432,33 @@ public class LoginActivity extends AppCompatActivity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    public void facebookButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.facebook.com/teatrmuzycznylodz/timeline"));
+        startActivity(browserIntent);
+    }
+
+    public void twitterButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://twitter.com/tm_lodz"));
+        startActivity(browserIntent);
+    }
+
+    public void instagramButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.instagram.com/teatrmuzycznylodz/"));
+        startActivity(browserIntent);
+    }
+
+    public void pinterestButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.pinterest.com/teatrmuzyczny/"));
+        startActivity(browserIntent);
     }
 }

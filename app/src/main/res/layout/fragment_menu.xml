@@ -9,96 +9,78 @@
     <LinearLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:background="#AAAAA8"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
         <Button
             android:id="@+id/buttonRepertuar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@android:color/black"
             android:onClick="reperturarButton"
             android:text="@string/menu_repertuar"
-            android:textColor="#AEB0B2" />
+            android:textColor="#AEB0B2"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/buttonSpektakle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="1dp"
             android:background="@android:color/black"
             android:onClick="spektakleButton"
             android:text="@string/menu_spektakle"
-            android:textColor="#AEB0B2" />
+            android:textColor="#AEB0B2"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/buttonWydarzenia"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="1dp"
             android:background="@android:color/black"
             android:onClick="wydarzeniaButton"
             android:text="@string/menu_wydarzenia"
-            android:textColor="#AEB0B2" />
+            android:textColor="#AEB0B2"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/buttonAktualnosci"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="1dp"
             android:background="@android:color/black"
             android:onClick="aktualnosciButton"
             android:text="@string/menu_aktualnosci"
-            android:textColor="#AEB0B2" />
+            android:textColor="#AEB0B2"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/buttonBilety"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="1dp"
             android:background="@android:color/black"
             android:onClick="biletyButton"
             android:text="@string/menu_bilety"
-            android:textColor="#AEB0B2" />
+            android:textColor="#AEB0B2"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/buttonKontakt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="1dp"
             android:background="@android:color/black"
             android:onClick="kontaktButton"
             android:text="@string/menu_kontakt"
-            android:textColor="#AEB0B2" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/tlo"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="617dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll"
-        app:layout_constraintVertical_bias="0.18">
-
+            android:textColor="#AEB0B2"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

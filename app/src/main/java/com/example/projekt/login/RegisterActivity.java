@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -228,5 +229,33 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
         else return false;
+    }
+
+    public void facebookButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.facebook.com/teatrmuzycznylodz/timeline"));
+        startActivity(browserIntent);
+    }
+
+    public void twitterButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://twitter.com/tm_lodz"));
+        startActivity(browserIntent);
+    }
+
+    public void instagramButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.instagram.com/teatrmuzycznylodz/"));
+        startActivity(browserIntent);
+    }
+
+    public void pinterestButton(View v){
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.pinterest.com/teatrmuzyczny/"));
+        startActivity(browserIntent);
     }
 }

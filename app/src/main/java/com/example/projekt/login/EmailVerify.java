@@ -87,9 +87,6 @@ public class EmailVerify extends AppCompatActivity {
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Hide Keyboard
-                Functions.hideSoftKeyboard(EmailVerify.this);
-
                 String email = bundle.getString("email");
                 String otp = textVerifyCode.getText().toString();
                 if (!otp.isEmpty()) {

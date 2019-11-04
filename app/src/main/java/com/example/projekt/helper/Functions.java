@@ -1,8 +1,6 @@
 package com.example.projekt.helper;
 
-import android.app.Activity;
 import android.content.Context;
-import android.view.inputmethod.InputMethodManager;
 
 public class Functions {
 
@@ -20,6 +18,9 @@ public class Functions {
 
     // Forgot Password
     public static String RESET_PASS_URL = MAIN_URL + "reset-password.php";
+
+    // Get Spectacle
+    public static String GET_SPECTALES_URL = MAIN_URL + "spectacles.php";
 
 
     /**
@@ -40,16 +41,5 @@ public class Functions {
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
-    }
-
-    /**
-     *  Hide Keyboard
-     */
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
     }
 }
