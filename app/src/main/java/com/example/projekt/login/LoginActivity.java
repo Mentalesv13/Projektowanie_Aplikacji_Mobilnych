@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             // login user
                             loginProcess(email, password);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Email is not valid!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Email is not valid (youremail@gmail.com)!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // Prompt user to enter credentials
@@ -335,7 +335,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
                 hideDialog();
             }
         }) {
@@ -393,7 +393,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Reset Password Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
                 hideDialog();
             }
         }) {

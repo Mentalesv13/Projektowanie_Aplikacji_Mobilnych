@@ -15,7 +15,7 @@ import com.example.projekt.pager.TabCzerwiec;
 import com.example.projekt.pager.TabLipiec;
 import com.example.projekt.pager.TabMaj;
 
-public class Repertuar extends Fragment {
+public class Repertoire extends Fragment {
     TabLayout tabLayout;
     ViewPager pager;
     private PagerAdapter _adapter;

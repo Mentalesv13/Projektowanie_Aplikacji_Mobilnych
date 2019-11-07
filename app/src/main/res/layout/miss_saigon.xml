@@ -8,22 +8,29 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="233dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/miss_saigon" />
 
     <TextView
         android:id="@+id/bilety_tv1"
-        android:layout_width="130dp"
+        android:layout_width="wrap_content"
         android:layout_height="29dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="196dp"
         android:background="#D81C5C"
         android:gravity="center"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:text="MISS SAIGON"
         android:textColor="#FAFDFE"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 

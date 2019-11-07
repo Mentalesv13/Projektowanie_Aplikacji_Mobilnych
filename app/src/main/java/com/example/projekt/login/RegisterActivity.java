@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (Functions.isValidEmailAddress(email)) {
                             registerUser(name, email, password);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Email is not valid!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Email is not valid (youremail@gmail.com)!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Please enter your details!", Toast.LENGTH_LONG).show();
@@ -146,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Registration Error: " + error.getMessage(), error);
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
                 hideDialog();
             }
         }) {

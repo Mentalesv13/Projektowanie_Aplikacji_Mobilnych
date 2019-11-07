@@ -21,12 +21,12 @@ public class AViewFlipper extends ViewFlipper
     protected void dispatchDraw(Canvas canvas)
     {
         super.dispatchDraw(canvas);
-        int width = getWidth();
+
 
         float margin = 2;
-        float radius = 13.5f;
-        float cx = width / 2 - ((radius + margin) * 2 * getChildCount() / 2);
-        float cy = getHeight() - 50;
+        float radius = 5.5f;
+        float cx = getWidth() / 2.0f - ((radius + margin) * 2 * getChildCount() / 2);
+        float cy = getHeight() - 10;
 
         canvas.save();
 

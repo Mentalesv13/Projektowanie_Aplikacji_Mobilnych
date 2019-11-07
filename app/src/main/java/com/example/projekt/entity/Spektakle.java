@@ -1,4 +1,4 @@
-package com.example.projekt.fragment;
+package com.example.projekt.entity;
 
 public class Spektakle {
     private int SpektaklId;

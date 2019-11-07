@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.projekt.R;
 
-public class Aktualnosci extends Fragment {
+public class News extends Fragment {
 
     public View onCreateView(LayoutInflater inflater,ViewGroup container,
                              Bundle savedInstanceState) {

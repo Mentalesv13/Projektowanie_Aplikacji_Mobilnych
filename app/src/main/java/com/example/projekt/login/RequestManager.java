@@ -9,6 +9,7 @@ import com.android.volley.toolbox.Volley;
 
 
 public class RequestManager extends Application {
+
     public static final String TAG = RequestManager.class.getSimpleName();
     private RequestQueue mRequestQueue;
 

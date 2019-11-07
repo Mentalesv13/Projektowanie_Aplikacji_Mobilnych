@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.projekt.R;
 
-public class AktualnosciMini extends Fragment {
+public class NewsMini extends Fragment {
     TextView descText;
     ImageButton show1, hide1;
     public View onCreateView(LayoutInflater inflater,ViewGroup container,

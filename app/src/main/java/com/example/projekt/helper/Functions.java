@@ -5,22 +5,25 @@ import android.content.Context;
 public class Functions {
 
     //Main URL
-    private static String MAIN_URL = "https://ldzmusictheatre.000webhostapp.com/android_login/";
+    private static String MAIN_URL = "https://ldzmusictheatre.000webhostapp.com/";
 
     // Login URL
-    public static String LOGIN_URL = MAIN_URL + "login.php";
+    public static String LOGIN_URL = MAIN_URL + "android_login/login.php";
 
     // Register URL
-    public static String REGISTER_URL = MAIN_URL + "register.php";
+    public static String REGISTER_URL = MAIN_URL + "android_login/register.php";
 
     // OTP Verification
-    public static String OTP_VERIFY_URL = MAIN_URL + "verification.php";
+    public static String OTP_VERIFY_URL = MAIN_URL + "android_login/verification.php";
 
     // Forgot Password
-    public static String RESET_PASS_URL = MAIN_URL + "reset-password.php";
+    public static String RESET_PASS_URL = MAIN_URL + "android_login/reset-password.php";
 
     // Get Spectacle
-    public static String GET_SPECTALES_URL = MAIN_URL + "spectacles.php";
+    public static String GET_SPECTALES_URL = MAIN_URL + "db/spectacles.php";
+
+    // Get Event
+    public static String GET_EVENT_URL = MAIN_URL + "db/events.php";
 
 
     /**
@@ -37,7 +40,8 @@ public class Functions {
      *  Email Address Validation
      */
     public static boolean isValidEmailAddress(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        //String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail.com";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();

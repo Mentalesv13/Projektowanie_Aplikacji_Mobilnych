@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class EmailVerify extends AppCompatActivity {
+
     private static final String TAG = EmailVerify.class.getSimpleName();
 
     private EditText textVerifyCode;
@@ -245,7 +246,7 @@ public class EmailVerify extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Resend Code Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
                 hideDialog();
             }
         }) {

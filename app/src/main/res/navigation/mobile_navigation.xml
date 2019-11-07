@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.projekt.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.projekt.fragment.Repertoire"
+        android:label="Repertoire"
+        tools:layout="@layout/fragment_repertuar" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.example.projekt.fragment.SpektakleView"
+        android:label="Spektakle"
+        tools:layout="@layout/fragment_spektakle" />
+
+    <fragment
+        android:id="@+id/nav_tools"
+        android:name="com.example.projekt.ui.Events.Events"
+        android:label="Events"
+        tools:layout="@layout/fragment_wydarzenia" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.example.projekt.fragment.NewsMini"
+        android:label="Events"
+        tools:layout="@layout/fragment_aktualnoscimini" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="com.example.projekt.fragment.Contact"
+        android:label="Events"
+        tools:layout="@layout/fragment_kontakt" />
+
+</navigation>

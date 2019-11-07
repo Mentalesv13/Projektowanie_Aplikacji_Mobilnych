@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.projekt.R;
 
-public class Kontakt extends Fragment {
+public class Contact extends Fragment {
 
     public View onCreateView(LayoutInflater inflater,ViewGroup container,
                              Bundle savedInstanceState) {
