@@ -3,17 +3,21 @@ package com.example.projekt.ui.Events;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -37,11 +41,9 @@ import static com.example.projekt.login.RequestManager.TAG;
 
 public class Events extends Fragment {
 
-    //private DatabaseHandler db;
-    Map<Integer, Event> Events = new HashMap<>();
-    //List<String> Events = new ArrayList<>();
-    View view;
 
+    Map<Integer, Event> Events = new HashMap<>();
+    View view;
     LoadingDialog loadingDialog;
 
 
@@ -51,12 +53,10 @@ public class Events extends Fragment {
         view = inflater.inflate(R.layout.fragment_wydarzenia, container, false);
 
         loadingDialog = new LoadingDialog(getActivity());
-        //showCustomLoadingDialog(view);
-        //
-        //loadingDialog.showDialog();
+
         final EventTask task = new EventTask();
         task.execute();
-        //createEventLayout();
+
         return view;
 
     }
@@ -65,11 +65,19 @@ public class Events extends Fragment {
 
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //ConstraintLayout parent = (ConstraintLayout) inflater.inflate(R.layout.fragment_wydarzenia, null);
-        LinearLayout abc = view.findViewById(R.id.llEvents);
+        final LinearLayout abc = view.findViewById(R.id.llEvents);
+
         for (int i = 0; i < Events.size(); i++) {
+
             Event temp = Events.get(i);
-            View custom = inflater.inflate(R.layout.fragment_wydarzenia2, null);
+            final View custom = inflater.inflate(R.layout.fragment_wydarzenia2, null);
+            custom.setTag(i);
+            custom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    eventOnClickDialog((Integer)custom.getTag());
+                }
+            });
             TextView tv = (TextView) custom.findViewById(R.id.llEvent_tv1);
             TextView tv1 = (TextView) custom.findViewById(R.id.llEvent_tv2);
             tv.setText(temp.getName_event());
@@ -171,5 +179,48 @@ public class Events extends Fragment {
             RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
             return null;
         }
+    }
+
+    private void eventOnClickDialog(int index) {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_wydarzenia3, null);
+        Event temp = Events.get(index);
+        TextView tv1 = (TextView) dialogView.findViewById(R.id.llEvent_tv1);
+        TextView tv2 = (TextView) dialogView.findViewById(R.id.llEvent_tv2);
+        tv1.setText(temp.getName_event());
+        tv2.setText(temp.getDesc_event());
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("More info");
+        dialogBuilder.setCancelable(false);
+
+        //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);
+
+        dialogBuilder.setPositiveButton("Back",  new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // empty
+            }
+        });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setEnabled(true);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                            dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
     }
 }
