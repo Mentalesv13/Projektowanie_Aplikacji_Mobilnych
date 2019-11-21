@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,23 +23,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.projekt.fragment.Blank;
 import com.example.projekt.fragment.Contact;
+import com.example.projekt.fragment.HomeFragment;
+import com.example.projekt.fragment.LoginFragment;
 import com.example.projekt.fragment.NewsMini;
-import com.example.projekt.fragment.Repertoire;
+import com.example.projekt.fragment.RepertoireView;
 import com.example.projekt.fragment.SpektakleView;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.SessionManager;
 import com.example.projekt.login.HomeActivity;
 import com.example.projekt.maps.MapsActivity;
-import com.example.projekt.ui.Events.Events;
-import com.example.projekt.ui.home.HomeFragment;
+import com.example.projekt.ui.events.Events;
+import com.example.projekt.ui.home.MainFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,12 +54,16 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private SessionManager session;
     private DatabaseHandler db;
-    private HashMap<String,String> user = new HashMap<>();
+    private HashMap<String, String> user = new HashMap<>();
     MenuItem navAccount;
     NavController navController;
+    NavigationView navigationView;
     TextView navHeader;
     TextView navText;
     Fragment fragment = null;
+    int fragmentFlag = 0;
+    int navigationTitle = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_repertoire, R.id.nav_spectacle,
-                R.id.nav_events, R.id.nav_news, R.id.nav_map,R.id.nav_contact,R.id.nav_login)
+                R.id.nav_events, R.id.nav_news, R.id.nav_map, R.id.nav_contact, R.id.nav_login)
                 .setDrawerLayout(drawer)
                 .build();
         Menu menu = navigationView.getMenu();
@@ -87,84 +94,112 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         View headerView = navigationView.getHeaderView(0);
+
         navHeader = headerView.findViewById(R.id.navHeader);
         navText = headerView.findViewById(R.id.navText);
+
+
+        fragmentFlag = 0;
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, new MainFragment());
+        ft.addToBackStack(String.valueOf(R.id.nav_home));
+        ft.commit();
+        navigationView.setCheckedItem(R.id.nav_home);
+
+        drawer.closeDrawer(GravityCompat.START);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                                                             @Override
-                                                             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                                                                 int id = menuItem.getItemId();
 
-                                                                 String title = getString(R.string.app_name);
-                                                                     switch (id) {
-                                                                         case R.id.nav_home: {
-                                                                             fragment = new HomeFragment();
-                                                                             title = "Home";
-                                                                             break;
-                                                                         }
-                                                                         case R.id.nav_repertoire: {
-                                                                             fragment = new Repertoire();
-                                                                             title = "Repertoire";
-                                                                             break;
-                                                                         }
 
-                                                                         case R.id.nav_spectacle: {
-                                                                             fragment = new SpektakleView();
-                                                                             title = "Spectacle";
-                                                                             break;
-                                                                         }
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
 
-                                                                         case R.id.nav_events: {
-                                                                             fragment = new Events();
-                                                                             title = "Events";
-                                                                             break;
-                                                                         }
-                                                                         case R.id.nav_news: {
-                                                                             fragment = new NewsMini();
-                                                                             title = "News";
-                                                                             break;
-                                                                         }
-                                                                         case R.id.nav_map: {
-                                                                             title = "";
-                                                                             Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
-                                                                             startActivity(myIntent);
-                                                                             break;
-                                                                         }
-                                                                         case R.id.nav_contact: {
-                                                                             fragment = new Contact();
-                                                                             title = "Contact";
-                                                                             break;
-                                                                         }
-                                                                         case R.id.nav_login: {
-                                                                             title = "";
-                                                                             Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
-                                                                             startActivity(myIntent);
-                                                                             break;
-                                                                         }
+                String title = getString(R.string.app_name);
+                switch (id) {
+                    case R.id.nav_home: {
+                        fragment = new MainFragment();
+                        title = "Home";
+                        navigationTitle = R.id.nav_home;
+                        break;
+                    }
+                    case R.id.nav_repertoire: {
+                        fragment = new RepertoireView();
+                        title = "Repertoire";
+                        navigationTitle = R.id.nav_repertoire;
+                        break;
+                    }
 
-                                                                         default:
-                                                                             return true;
-                                                                     }
-                                                                 if (checkNetworkConnection()==true) {
-                                                                     if (fragment != null) {
-                                                                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                                                         ft.replace(R.id.content_frame, fragment);
-                                                                         ft.commit();
-                                                                     }
-                                                                     if (getSupportActionBar() != null) {
-                                                                         getSupportActionBar().setTitle(title);
-                                                                     }
-                                                                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                                                                     drawer.closeDrawer(GravityCompat.START);
-                                                                 }else {
-                                                                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                                                                     drawer.closeDrawer(GravityCompat.START);
-                                                                     noInternetConnectionDialog();
-                                                                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                                                                     ft.replace(R.id.content_frame, new Blank());
-                                                                     ft.commit();
-                                                                 }
-                                                                 return true;
-                                                             }
+                    case R.id.nav_spectacle: {
+                        fragment = new SpektakleView();
+                        title = "Spectacle";
+                        navigationTitle = R.id.nav_spectacle;
+                        break;
+                    }
+
+                    case R.id.nav_events: {
+                        fragment = new Events();
+                        title = "Events";
+                        navigationTitle = R.id.nav_events;
+                        break;
+                    }
+                    case R.id.nav_news: {
+                        fragment = new NewsMini();
+                        title = "News";
+                        navigationTitle = R.id.nav_news;
+                        break;
+                    }
+                    case R.id.nav_map: {
+                        title = "";
+                        Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
+                        startActivity(myIntent);
+                        break;
+                    }
+                    case R.id.nav_contact: {
+                        fragment = new Contact();
+                        title = "Contact";
+                        navigationTitle = R.id.nav_contact;
+                        break;
+                    }
+                    case R.id.nav_login: {
+                        title = "Account";
+                        //Intent myIntent = new Intent(MainActivity.this, HomeActivity.class);
+                        //startActivity(myIntent);
+                        if(session.isLoggedIn()){fragment = new HomeFragment();
+                        }else
+                        fragment = new LoginFragment();
+                        navigationTitle = R.id.nav_login;
+                        //navigationView.setCheckedItem(R.id.nav_login);
+                        break;
+                    }
+
+                    default:
+                        return true;
+                }
+                //if (checkNetworkConnection()==true) {
+                if (fragment != null && (fragmentFlag != navigationTitle)) {
+                    fragmentFlag = navigationTitle;
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_frame, fragment);
+                    ft.addToBackStack(String.valueOf(navigationTitle));
+                    ft.commit();
+                }
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(title);
+                }
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                drawer.closeDrawer(GravityCompat.START);
+                // }else {
+                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                //drawer.closeDrawer(GravityCompat.START);
+                //noInternetConnectionDialog();
+                //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                //ft.replace(R.id.content_frame, new Blank());
+                //ft.commit();
+                //}
+                return true;
+            }
         });
         //NavigationUI.setupWithNavController(navigationView, navController);
     }
@@ -182,9 +217,7 @@ public class MainActivity extends AppCompatActivity {
             navAccount.setTitle("Your Account");
             navAccount.setIcon(R.drawable.ic_login_black);
 
-        }
-        else
-        {
+        } else {
             navHeader.setText(getString(R.string.nav_header_title));
             navText.setText(getString(R.string.nav_header_subtitle));
             String redString = getResources().getString(R.string.log_in);
@@ -199,6 +232,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0); }
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
@@ -209,9 +246,7 @@ public class MainActivity extends AppCompatActivity {
             navText.setText(email);
             navAccount.setTitle("Your Account");
             navAccount.setIcon(R.drawable.ic_login_black);
-        }
-       else
-        {
+        } else {
             navHeader.setText(getString(R.string.nav_header_title));
             navText.setText(getString(R.string.nav_header_subtitle));
             String redString = getResources().getString(R.string.log_in);
@@ -219,8 +254,8 @@ public class MainActivity extends AppCompatActivity {
             navAccount.setIcon(R.drawable.ic_login_red);
         }
 
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration);
+                //|| super.onSupportNavigateUp();
     }
 
 
@@ -233,9 +268,7 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setTitle("NoInternetConnection");
         dialogBuilder.setCancelable(false);
 
-        //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);
-
-        dialogBuilder.setPositiveButton("Reload",  new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton("Reload", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // empty
@@ -254,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if (checkNetworkConnection()==true) {
+                        if (checkNetworkConnection()) {
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             ft.replace(R.id.content_frame, fragment);
                             ft.commit();
@@ -271,13 +304,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkNetworkConnection() {
-        ConnectivityManager connectManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnected())
-        {
+        if (netInfo != null && netInfo.isConnected()) {
             return true;
+        } else return false;
+    }
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        int count = fragmentManager.getBackStackEntryCount();
+        if (count <= 1) {
+            finish();
         }
-        else return false;
+        else {
+            int title = Integer.parseInt(fragmentManager.getBackStackEntryAt(count-2).getName());
+            if (count == 2) {
+                // here I am using a NavigationDrawer and open it when transitioning to the initial fragment
+                // a second back-press will result in finish() being called above.
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            }
+            super.onBackPressed();
+            fragmentFlag = title;
+            //Log.v(TAG, "onBackPressed - title="+title);
+
+            navigationView.setCheckedItem(title);
+            String titles = (String) navigationView.getCheckedItem().getTitle();
+            getSupportActionBar().setTitle(titles);
+        }
+    }
+
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
     }
 }
 

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/spectacleLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/spektakle_lines"
+    android:orientation="vertical"
+    android:paddingTop="8dp">
+
+    <ImageView
+        android:id="@+id/spectacle_image"
+        android:layout_width="113dp"
+        android:layout_height="133dp"
+        android:contentDescription="misssaigon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sp_ms"
+        tools:srcCompat="@drawable/sp_ms" />
+
+    <TextView
+        android:id="@+id/spectacle_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/spektakle_ll_tv1"
+        android:textAlignment="viewStart"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/spectacle_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_premiere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/premiera"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/spectacle_image"
+        app:layout_constraintTop_toBottomOf="@+id/spectacle_Name" />
+
+    <TextView
+        android:id="@+id/premiere_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ll1_tv3"
+        android:textColor="#D71C5C"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/spectacle_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_premiere" />
+
+    <TextView
+        android:id="@+id/spectacle_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="2dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spectacle_image"
+        app:layout_constraintTop_toBottomOf="@+id/premiere_date" />
+
+    <LinearLayout
+        android:id="@+id/lowerLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/spectacle_image"
+        app:layout_constraintTop_toBottomOf="@+id/spectacle_desc">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewReservation1"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_above="@+id/tResend"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#F1EAD8"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/reservationBtn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="200dp"
+                    android:layout_height="34dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:drawableLeft="@drawable/ic_date"
+                    android:text="REZERWUJ"
+                    android:textSize="10sp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewReservation2"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_above="@+id/tResend"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/buyBtn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:drawableStart="@drawable/ic_purchase"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="KUP BILET"
+                    android:textAlignment="center"
+                    android:textColor="#F9FCFD"
+                    android:textSize="12sp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/ll_button3"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="110dp"
+            android:layout_height="34dp"
+            android:layout_weight="1"
+            android:background="#F1EAD8"
+            android:drawableStart="@drawable/obsada"
+            android:padding="10dp"
+            android:text="@string/obsada"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgZoom"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/menu_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spectacle_image"
+        app:srcCompat="@drawable/ic_zoom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

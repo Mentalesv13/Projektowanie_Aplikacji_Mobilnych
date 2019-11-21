@@ -18,7 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projekt.R;
 
-public class HomeFragment extends Fragment {
+public class MainFragment extends Fragment {
 
         public static ViewFlipper viewFlipper;
         View view;
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
 
                         if (checkNetworkConnection()==true) {
                             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.content_frame, new HomeFragment());
+                            ft.replace(R.id.content_frame, new MainFragment());
                             ft.commit();
                             dialog.dismiss();
                         } else {

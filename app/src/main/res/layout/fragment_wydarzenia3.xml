@@ -14,15 +14,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/llEvent_img"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:background="@color/tlo"
-                app:srcCompat="@drawable/people" />
-
             <TextView
                 android:id="@+id/llEvent_tv1"
                 android:layout_width="match_parent"
@@ -45,9 +36,9 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/textlines"
                 android:paddingBottom="8dp"
-                android:text="W dniach 23-28 kwietnia 2019 w Teatrze Muzycznym w Łodzi odbędzie się po raz kolejny festiwal małych form wokalno-aktorskich OFF-Północna."
                 android:textAlignment="textStart"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textSize="15sp" />
         </LinearLayout>
 
 

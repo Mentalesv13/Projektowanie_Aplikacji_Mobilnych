@@ -191,5 +191,6 @@
     <string name="map">Map</string>
     <string name="contact">Contact</string>
     <string name="log_in"><font fgcolor='#FF0000'>Log In</font></string>
+    <string name="Whoops">Check your Internet Connection and press reload button</string>
 
 </resources>

@@ -8,8 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -67,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                if (checkNetworkConnection() == true) {
+                if (checkNetworkConnection()) {
                     String name = inputName.getText().toString().trim();
                     String email = inputEmail.getText().toString().trim();
                     String password = inputPassword.getText().toString().trim();
@@ -77,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (Functions.isValidEmailAddress(email)) {
                             registerUser(name, email, password);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Email is not valid (youremail@gmail.com)!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Email is not valid (yourmail@gmail.com)!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), "Please enter your details!", Toast.LENGTH_LONG).show();
@@ -186,8 +187,6 @@ public class RegisterActivity extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
         dialogBuilder.setTitle("NoInternetConnection");
         dialogBuilder.setCancelable(false);
-
-        //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);
 
         dialogBuilder.setPositiveButton("Reload",  new DialogInterface.OnClickListener() {
             @Override

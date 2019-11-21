@@ -14,7 +14,7 @@ import com.example.projekt.R;
 public class StronaGlowna extends Fragment {
     public static ViewFlipper viewFlipper;
 
-int images [] = {R.drawable.les_miserables, R.drawable.les_miserables};
+//int images [] = {R.drawable.les_miserables, R.drawable.les_miserables};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

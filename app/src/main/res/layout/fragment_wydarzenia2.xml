@@ -20,7 +20,7 @@
         android:id="@+id/llEvent_tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
         android:text="3. EDYCJA FESTIWALU OFF - PÓŁNOCNA"
         android:textAlignment="center"
         android:textAllCaps="true"
@@ -38,8 +38,8 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/textlines"
         android:paddingBottom="8dp"
-        android:text="W dniach 23-28 kwietnia 2019 w Teatrze Muzycznym w Łodzi odbędzie się po raz kolejny festiwal małych form wokalno-aktorskich OFF-Północna."
         android:textAlignment="textStart"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textSize="14sp" />
 
 </LinearLayout>

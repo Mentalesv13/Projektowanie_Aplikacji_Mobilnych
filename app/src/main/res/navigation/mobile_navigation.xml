@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.projekt.ui.home.HomeFragment"
+        android:name="com.example.projekt.ui.home.MainFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_blank" />
 
     <fragment
         android:id="@+id/nav_repertoire"
-        android:name="com.example.projekt.fragment.Repertoire"
+        android:name="com.example.projekt.fragment.RepertoireView"
         android:label="Repertoire"
         tools:layout="@layout/fragment_repertuar" />
 
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_events"
-        android:name="com.example.projekt.ui.Events.Events"
+        android:name="com.example.projekt.ui.events.Events"
         android:label="Events"
         tools:layout="@layout/fragment_wydarzenia" />
 
@@ -37,9 +37,9 @@
 
     <fragment
         android:id="@+id/nav_map"
-        android:name="com.example.projekt.fragment.Contact"
+        android:name="com.example.projekt.maps.MapsActivity"
         android:label="Events"
-        tools:layout="@layout/fragment_kontakt" />
+        tools:layout="@layout/activity_maps" />
 
     <fragment
         android:id="@+id/nav_contact"

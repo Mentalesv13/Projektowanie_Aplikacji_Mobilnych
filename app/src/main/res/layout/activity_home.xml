@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/logonew" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewReservation"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_above="@+id/cardView2"

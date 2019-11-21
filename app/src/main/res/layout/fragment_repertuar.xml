@@ -38,7 +38,9 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repertuarBanner"
-        app:tabIndicatorColor="#F9FCFD">
+        app:tabIndicatorColor="#F9FCFD"
+        android:layout_gravity="center_horizontal"
+        app:tabMode="scrollable">
 
     </com.google.android.material.tabs.TabLayout>
 

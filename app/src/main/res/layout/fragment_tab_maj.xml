@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll1"
+                android:id="@+id/spectacleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
@@ -42,7 +42,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/ll1_tv1"
+                            android:id="@+id/spectacle_Name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="bottom|center_horizontal"
@@ -51,7 +51,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/ll1_tv2"
+                            android:id="@+id/tv_premiere"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
@@ -65,7 +65,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/ll1_tv3"
+                            android:id="@+id/premiere_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="PHYSICAL CULTURE ASSOCIATION"
@@ -79,7 +79,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/ll1_tv4"
+                                android:id="@+id/spectacle_desc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="0dp"
@@ -148,7 +148,7 @@
                 android:id="@+id/ll2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/ll1"
+                android:layout_below="@id/spectacleLayout"
                 android:layout_marginTop="2dp"
                 android:background="#FDFDFE"
                 android:orientation="vertical">

@@ -25,6 +25,9 @@ public class Functions {
     // Get Event
     public static String GET_EVENT_URL = MAIN_URL + "db/events.php";
 
+    // Get RepertoireView
+    public static String GET_REPERTOIRE_URL = MAIN_URL + "db/repertoire.php";
+
 
     /**
      * Function to logout user

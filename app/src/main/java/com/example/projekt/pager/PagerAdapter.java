@@ -11,7 +11,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     public PagerAdapter(FragmentManager activity) {
         super(activity);
-
         this._fragments = new ArrayList<Fragment>();
     }
 
@@ -31,7 +30,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 11;
     }
 
 
