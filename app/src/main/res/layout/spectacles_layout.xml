@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spectacle_desc">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewReservation1"
+            android:id="@+id/cardViewReservation"
             android:layout_width="200dp"
             android:layout_height="35dp"
             android:layout_above="@+id/tResend"
@@ -87,8 +87,8 @@
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
             app:cardBackgroundColor="#F1EAD8"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="10dp">
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/cardElevation">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewReservation2"
+            android:id="@+id/cardViewBuy"
             android:layout_width="200dp"
             android:layout_height="35dp"
             android:layout_above="@+id/tResend"
@@ -119,8 +119,8 @@
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
             app:cardBackgroundColor="@color/colorAccent"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="10dp">
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/cardElevation">
 
             <RelativeLayout
                 android:layout_width="match_parent"

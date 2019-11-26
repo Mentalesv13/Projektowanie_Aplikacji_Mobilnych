@@ -83,6 +83,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.projekt.login.LoginActivity" />
         </activity>
+        <activity android:name=".booking.SeatView" />
     </application>
 
 </manifest>

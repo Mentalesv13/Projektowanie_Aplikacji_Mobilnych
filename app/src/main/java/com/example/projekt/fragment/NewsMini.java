@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.projekt.R;
 
@@ -47,21 +45,20 @@ public class NewsMini extends Fragment {
             }
         });
 
-        header.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.content_frame, new NewsMini());
-                    ft.commit();
-
-                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("News");
-
-                //DrawerLayout drawer = (DrawerLayout) view.findViewById(R.id.drawer_layout);
-                //drawer.closeDrawer(GravityCompat.START);
-            }
-        });
+//        header.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//                    ft.replace(R.id.content_frame, new NewsMini());
+//                    ft.commit();
+//                ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("News");
+//
+//                //DrawerLayout drawer = (DrawerLayout) view.findViewById(R.id.drawer_layout);
+//                //drawer.closeDrawer(GravityCompat.START);
+//            }
+//        });
 
         return view;
 

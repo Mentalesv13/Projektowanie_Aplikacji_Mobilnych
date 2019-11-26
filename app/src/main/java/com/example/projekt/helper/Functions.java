@@ -28,6 +28,9 @@ public class Functions {
     // Get RepertoireView
     public static String GET_REPERTOIRE_URL = MAIN_URL + "db/repertoire.php";
 
+    // Get Seats
+    public static String GET_SEATS_URL = MAIN_URL + "db/places.php";
+
 
     /**
      * Function to logout user

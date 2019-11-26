@@ -1,19 +1,35 @@
 package com.example.projekt.pager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.projekt.R;
+import com.example.projekt.booking.SeatView;
 import com.example.projekt.entity.Repertoire;
 import com.example.projekt.helper.DatabaseHandler;
+import com.example.projekt.helper.Functions;
+import com.example.projekt.login.RequestManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TabRepertoire extends Fragment {
     private DatabaseHandler db;
@@ -52,14 +69,34 @@ public class TabRepertoire extends Fragment {
             for (int i = 0; i < Repertoires.size(); i++) {
                 Repertoire temp = Repertoires.get(i);
                 final View custom = inflater.inflate(R.layout.repertoire_element, null);
-                custom.setTag(i);
 
                 TextView repertoireName = (TextView) custom.findViewById(R.id.repertoireName);
                 TextView repertoireTime = (TextView) custom.findViewById(R.id.repertoireTime);
                 TextView repertoireDate = (TextView) custom.findViewById(R.id.repertoireDate);
                 TextView repertoireDay = (TextView) custom.findViewById(R.id.repertoireDay);
-                CardView btnBuy = custom.findViewById(R.id.cardViewReservation1);
-                CardView btnReserve = custom.findViewById(R.id.cardViewReservation2);;
+                final Button btnBuy = custom.findViewById(R.id.reservationBtn);
+                final Button btnReserve = custom.findViewById(R.id.buyBtn);
+                CardView cardBuy = custom.findViewById(R.id.cardViewBuy);
+                CardView cardReserve = custom.findViewById(R.id.cardViewReservation);
+
+                btnBuy.setTag(temp.getId_repertoire());
+                btnReserve.setTag(temp.getId_repertoire());
+
+                btnBuy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(),"Clcik",Toast.LENGTH_LONG);
+                        getSeats(String.valueOf(btnBuy.getTag()));
+                    }
+                });
+
+                btnReserve.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(),"Clcik",Toast.LENGTH_LONG);
+                        getSeats(String.valueOf(btnReserve.getTag()));
+                    }
+                });
 
                 repertoireName.setText(temp.getName_repertoire());
                 String tempTime = temp.getTime_repertoire();
@@ -71,8 +108,8 @@ public class TabRepertoire extends Fragment {
                     Date d2 = df.parse(tempTime);
 
                     if(d1.compareTo(d2) > 0) {
-                        btnBuy.setVisibility(View.GONE);
-                        btnReserve.setVisibility(View.GONE);
+                        cardBuy.setVisibility(View.GONE);
+                        cardReserve.setVisibility(View.GONE);
                     }
 
                 } catch (ParseException e) {
@@ -132,5 +169,72 @@ public class TabRepertoire extends Fragment {
             case 6 : return "Fri.";
         }
         return "err";
+    }
+
+
+    public void getSeats(final String id){
+        Log.d(TAG,"ID: " + id);
+        String tag_string_req = "req_seats";
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                Functions.GET_SEATS_URL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                //Log.d(TAG, "Reset Password Response: " + response);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    //boolean error = jsonObject.getBoolean("error");
+                    Log.e("TAG", "Log: " + response);
+
+//                    if (!error) {
+//                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+//                    } else {
+//                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+//                    }
+                    String seats = (String) jsonObject.get("places");
+
+                    Intent myIntent = new Intent(getActivity(), SeatView.class);
+                    myIntent.putExtra("seats", seats);
+                    startActivity(myIntent);
+
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //Log.e(TAG, "Reset Password Error: " + error.getMessage());
+                Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to Seat url
+                Map<String, String> params = new HashMap<>();
+
+                params.put("id_repertoire", id);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+
+        };
+
+        // Adding request to volley request queue
+        strReq.setRetryPolicy(new DefaultRetryPolicy(5 * DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, 0));
+        strReq.setRetryPolicy(new DefaultRetryPolicy(0, 0, 0));
+        RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 }

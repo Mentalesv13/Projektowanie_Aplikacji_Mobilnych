@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,7 +39,6 @@ import com.example.projekt.fragment.RepertoireView;
 import com.example.projekt.fragment.SpektakleView;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.SessionManager;
-import com.example.projekt.login.HomeActivity;
 import com.example.projekt.maps.MapsActivity;
 import com.example.projekt.ui.events.Events;
 import com.example.projekt.ui.home.MainFragment;
@@ -48,21 +48,26 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DrawerLayout.DrawerListener {
 
-    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
     private AppBarConfiguration mAppBarConfiguration;
     private SessionManager session;
     private DatabaseHandler db;
+    Handler mHandler = new Handler();
     private HashMap<String, String> user = new HashMap<>();
     MenuItem navAccount;
     NavController navController;
     NavigationView navigationView;
+    DrawerLayout drawer;
     TextView navHeader;
     TextView navText;
     Fragment fragment = null;
     int fragmentFlag = 0;
     int navigationTitle = 0;
+    Runnable mPendingRunnable;
+    String title = "Home";
+    private boolean isDrawerOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+        drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -108,14 +114,15 @@ public class MainActivity extends AppCompatActivity {
 
         drawer.closeDrawer(GravityCompat.START);
 
+
+        drawer.setDrawerListener(this);
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
 
-                String title = getString(R.string.app_name);
                 switch (id) {
                     case R.id.nav_home: {
                         fragment = new MainFragment();
@@ -176,18 +183,36 @@ public class MainActivity extends AppCompatActivity {
                     default:
                         return true;
                 }
+
+                mPendingRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        // update the main content by replacing fragments
+                        if (fragment != null && (fragmentFlag != navigationTitle)) {
+                            fragmentFlag = navigationTitle;
+                            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.content_frame, fragment);
+                            ft.addToBackStack(String.valueOf(navigationTitle));
+                            ft.commit();
+                            if (getSupportActionBar() != null) {
+                                getSupportActionBar().setTitle(title);
+                            }
+                        }
+                    }
+                };
                 //if (checkNetworkConnection()==true) {
-                if (fragment != null && (fragmentFlag != navigationTitle)) {
-                    fragmentFlag = navigationTitle;
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.content_frame, fragment);
-                    ft.addToBackStack(String.valueOf(navigationTitle));
-                    ft.commit();
-                }
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(title);
-                }
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+//                if (fragment != null && (fragmentFlag != navigationTitle)) {
+//                    fragmentFlag = navigationTitle;
+//                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                    ft.replace(R.id.content_frame, fragment);
+//                    ft.addToBackStack(String.valueOf(navigationTitle));
+//                    ft.commit();
+//                }
+                //if (getSupportActionBar() != null) {
+                //    getSupportActionBar().setTitle(title);
+                //}
+                //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
                 drawer.closeDrawer(GravityCompat.START);
                 // }else {
@@ -229,6 +254,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -337,5 +366,40 @@ public class MainActivity extends AppCompatActivity {
     public void setActionBarTitle(String title){
         getSupportActionBar().setTitle(title);
     }
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+        if(slideOffset > .55 && !isDrawerOpen){
+            onDrawerOpened(drawerView);
+            isDrawerOpen = true;
+        } else if(slideOffset < .45 && isDrawerOpen) {
+            onDrawerClosed(drawerView);
+            isDrawerOpen = false;
+        }
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+
+        invalidateOptionsMenu();
+
+        // If mPendingRunnable is not null, then add to the message queue
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+            mPendingRunnable = null;
+        }
+    }
+
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
+    }
+
 }
 
