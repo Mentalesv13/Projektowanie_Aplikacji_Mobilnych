@@ -47,6 +47,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DESC_SPECTACLE = "desc_spectacle";
     private static final String KEY_PREMIERE_DATE = "premiere_date";
     private static final String KEY_IMAGE_SPECTACLE = "image_spectacle";
+    private static final String KEY_INSIDE_SPECTACLE= "inside_spectacle";
 
     private static final String KEY_ID_REPERTOIRE = "repertoire_id";
     private static final String KEY_NAME_REPERTOIRE = "name_repertoire";
@@ -72,6 +73,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_NAME_EVENT + " TEXT,"
             + KEY_SDESC_EVENT + " TEXT,"
             + KEY_DESC_EVENT + " TEXT" + ")";
+
+//    private static final String CREATE_SPECTACLE_TABLE = "CREATE TABLE " + TABLE_SPECTACLE + "("
+//            + KEY_ID_SPECTACLE + " TEXT,"
+//            + KEY_NAME_SPECTACLE + " TEXT,"
+//            + KEY_DESC_SPECTACLE + " TEXT,"
+//            + KEY_PREMIERE_DATE + " TEXT,"
+//            + KEY_IMAGE_SPECTACLE + " TEXT"
+//            + KEY_INSIDE_SPECTACLE + ")";
 
     private static final String CREATE_SPECTACLE_TABLE = "CREATE TABLE " + TABLE_SPECTACLE + "("
             + KEY_ID_SPECTACLE + " TEXT,"
@@ -151,6 +160,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DESC_SPECTACLE, desc); // description
         values.put(KEY_PREMIERE_DATE, date); // date
         values.put(KEY_IMAGE_SPECTACLE, imgUrl); // imageURL
+        //values.put(KEY_INSIDE_SPECTACLE, inside); // imageURL
 
         // Inserting Row
         db.insert(TABLE_SPECTACLE, null, values);
@@ -337,11 +347,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * Recreate database
      * Delete all tables and create them again
      * */
-    public void resetTables(){
+    public void resetLogin(){
         SQLiteDatabase db = this.getWritableDatabase();
         // Delete All Rows
         db.delete(TABLE_LOGIN, null, null);
         db.close();
     }
 
+    public void resetTables(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_SPECTACLE, null, null);
+        db.delete(TABLE_REPERTOIRE, null, null);
+        db.delete(TABLE_EVENTS, null, null);
+        db.close();
+    }
 }

@@ -38,7 +38,7 @@ public class Functions {
      * */
     public boolean logoutUser(Context context){
         DatabaseHandler db = new DatabaseHandler(context);
-        db.resetTables();
+        db.resetLogin();
         return true;
     }
 

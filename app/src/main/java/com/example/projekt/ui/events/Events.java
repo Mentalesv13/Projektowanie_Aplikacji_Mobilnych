@@ -45,10 +45,11 @@ import static com.example.projekt.login.RequestManager.TAG;
 public class Events extends Fragment {
 
     private DatabaseHandler db;
+    SessionManager session;
     HashMap<Integer,Event> Events;
     View view;
     LoadingDialog loadingDialog;
-    SessionManager session;
+
     int images[] = {R.drawable.people, R.drawable.premiere, R.drawable.megaphone, R.drawable.haze};
 
 

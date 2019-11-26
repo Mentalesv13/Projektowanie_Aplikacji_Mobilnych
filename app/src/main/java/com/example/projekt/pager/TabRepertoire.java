@@ -85,7 +85,7 @@ public class TabRepertoire extends Fragment {
                 btnBuy.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(),"Clcik",Toast.LENGTH_LONG);
+                        Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG);
                         getSeats(String.valueOf(btnBuy.getTag()));
                     }
                 });
@@ -93,7 +93,7 @@ public class TabRepertoire extends Fragment {
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(),"Clcik",Toast.LENGTH_LONG);
+                        Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG);
                         getSeats(String.valueOf(btnReserve.getTag()));
                     }
                 });
@@ -171,7 +171,6 @@ public class TabRepertoire extends Fragment {
         return "err";
     }
 
-
     public void getSeats(final String id){
         Log.d(TAG,"ID: " + id);
         String tag_string_req = "req_seats";
@@ -219,7 +218,7 @@ public class TabRepertoire extends Fragment {
                 // Posting parameters to Seat url
                 Map<String, String> params = new HashMap<>();
 
-                params.put("id_repertoire", id);
+                params.put("id_performance", id);
                 return params;
             }
 
