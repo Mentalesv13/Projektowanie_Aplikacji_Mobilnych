@@ -32,20 +32,25 @@
     <fragment
         android:id="@+id/nav_news"
         android:name="com.example.projekt.fragment.NewsMini"
-        android:label="Events"
+        android:label="News"
         tools:layout="@layout/fragment_aktualnoscimini" />
 
     <fragment
         android:id="@+id/nav_map"
         android:name="com.example.projekt.maps.MapsActivity"
-        android:label="Events"
+        android:label="Map"
         tools:layout="@layout/activity_maps" />
 
     <fragment
         android:id="@+id/nav_contact"
         android:name="com.example.projekt.fragment.Contact"
-        android:label="Events"
+        android:label="Contact"
         tools:layout="@layout/fragment_kontakt" />
 
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.example.projekt.fragment.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/activity_login_fragment" />
 
 </navigation>

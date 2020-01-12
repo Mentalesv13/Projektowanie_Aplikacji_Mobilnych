@@ -184,6 +184,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+
+    public String getEmail(){
+        String email = "";
+        String selectQuery = "SELECT  * FROM " + TABLE_LOGIN;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        if(cursor.getCount() > 0){
+            email = cursor.getString(3);
+        }
+        cursor.close();
+        db.close();
+        // return user
+        return email;
+    }
+
     /**
      * Getting user data from database
      * */
@@ -267,7 +285,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return events
         return spectacles;
     }
+    public HashMap<Integer, Spektakle> getSpectaclesDetail(String newText){
+        HashMap<Integer, Spektakle> spectacles = new HashMap<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SPECTACLE ;
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        int tempID = 0;
+        do
+        {
+
+            //if(cursor.getCount() > 0){
+            String id =  cursor.getString(0);
+            String name = cursor.getString(1);
+            if (containsIgnoreCase(name, newText)) {
+                String desc = cursor.getString(2);
+                String date = cursor.getString(3);
+                String imgURL = cursor.getString(4);
+
+                spectacles.put(tempID, new Spektakle((Long.parseLong(id)), name, desc, date, imgURL));
+                tempID++;
+            }
+
+        } while (cursor.moveToNext());
+        cursor.close();
+        db.close();
+        // return events
+        return spectacles;
+    }
+
+    private static boolean containsIgnoreCase(String str, String subString) {
+        return str.toLowerCase().contains(subString.toLowerCase());
+    }
 
     /**
      * Getting repertoire data from database
@@ -360,6 +411,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.delete(TABLE_SPECTACLE, null, null);
         db.delete(TABLE_REPERTOIRE, null, null);
         db.delete(TABLE_EVENTS, null, null);
+        db.close();
+    }
+
+    public void resetSpectacles(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_SPECTACLE, null, null);
+        db.close();
+    }
+    public void resetEvents(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_EVENTS, null, null);
+        db.close();
+    }
+    public void resetRepertoire(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_REPERTOIRE, null, null);
         db.close();
     }
 }

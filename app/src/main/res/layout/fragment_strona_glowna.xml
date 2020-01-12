@@ -19,18 +19,30 @@
             android:layout_width="match_parent"
             android:layout_height="236dp">
 
-            <include layout="@layout/les_miserables" />
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bilety" />
 
-            <include layout="@layout/madagaskar" />
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bilety" />
 
-            <include layout="@layout/miss_saigon" />
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/bilety" />
 
         </com.example.projekt.pager.AViewFlipper>
     </FrameLayout>
 
     <fragment
         android:id="@+id/fragment2"
-        android:name="com.example.projekt.fragment.NewsMini"
+        android:name="com.example.projekt.ui.events.Events"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

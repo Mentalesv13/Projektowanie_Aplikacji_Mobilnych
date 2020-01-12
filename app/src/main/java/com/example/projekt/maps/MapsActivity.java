@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -20,8 +19,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import com.example.projekt.MainActivity;
 import com.example.projekt.R;
+import com.example.projekt.SlideMain;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,8 +30,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 import java.util.Locale;
@@ -179,13 +176,13 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if(myMarker !=null) {
-            Polyline line = mMap.addPolyline(new PolylineOptions()
-                    .add(myMarker.getPosition(), mTheater.getPosition())
-                    .width(10)
-                    .color(Color.RED));
-            //line.setClickable(true);
-        }
+//        if(myMarker !=null) {
+//            Polyline line = mMap.addPolyline(new PolylineOptions()
+//                    .add(myMarker.getPosition(), mTheater.getPosition())
+//                    .width(10)
+//                    .color(Color.RED));
+//            //line.setClickable(true);
+//        }
 
 
         if (marker.equals(mTheater)) {
@@ -201,7 +198,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent myIntent = new Intent(this, MainActivity.class);
+        Intent myIntent = new Intent(this, SlideMain.class);
         startActivity(myIntent);
+        overridePendingTransition(0, 0);
     }
 }

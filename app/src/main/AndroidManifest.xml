@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projekt">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -21,12 +20,12 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/projektlabel"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:largeHeap="true">
-
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".booking.YourTicket"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -41,16 +40,14 @@
 
         <activity
             android:name=".maps.MapsActivity"
-            android:label="@string/title_activity_maps"/>
-
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-
-        <activity android:name=".SplashScreen"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".SplashScreen"
             android:label="@string/projektlabel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +55,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/app_name" />
@@ -84,6 +80,7 @@
                 android:value="com.example.projekt.login.LoginActivity" />
         </activity>
         <activity android:name=".booking.SeatView" />
+        <activity android:name=".SlideMain"></activity>
     </application>
 
 </manifest>

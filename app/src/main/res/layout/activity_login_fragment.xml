@@ -6,20 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".fragment.LoginFragment">
+    tools:context=".login.LoginActivity">
 
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="157dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         app:srcCompat="@drawable/logonew" />
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etLogin"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_below="@+id/logo"
@@ -33,12 +33,12 @@
         android:textSize="16dp" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etPass"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/etEmail"
-        android:layout_alignStart="@+id/etEmail"
-        android:layout_alignLeft="@+id/etEmail"
+        android:layout_below="@+id/etLogin"
+        android:layout_alignStart="@+id/etLogin"
+        android:layout_alignLeft="@+id/etLogin"
         android:layout_marginTop="16dp"
         android:background="#11000000"
         android:drawableLeft="@drawable/ic_password"

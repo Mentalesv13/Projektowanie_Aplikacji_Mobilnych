@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.Request;
@@ -40,29 +42,44 @@ import java.util.Iterator;
 import static com.example.projekt.login.RequestManager.TAG;
 
 public class RepertoireView extends Fragment {
-    TabLayout tabLayout;
-    ViewPager pager;
-    PagerAdapter _adapter;
+
     private DatabaseHandler db;
     HashMap<Integer, Repertoire> Repertoire;
     View view;
     LoadingDialog loadingDialog;
     SessionManager session;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    private ImageView repertuarBanner;
 
     public View onCreateView(LayoutInflater inflater,ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_repertuar, container, false);
+        repertuarBanner = view.findViewById(R.id.repertuarBanner);
+        repertuarBanner.setImageResource(R.drawable.spektakle);
+
         db = new DatabaseHandler(getContext());
         session = new SessionManager(getContext());
         loadingDialog = new LoadingDialog(getActivity());
 
-        if(!session.isRepertoireUp()) {
+        mSwipeRefreshLayout = view.findViewById(R.id.swifeRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.black, android.R.color.holo_red_dark);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                final RepertoireTask task = new RepertoireTask();
+                task.execute();
+            }
+        });
+        if (!session.isRepertoireUp()) {
             final RepertoireTask task = new RepertoireTask();
             task.execute();
         }
         else {
+            loadingDialog.showDialog();
+            Repertoire= db.getRepertoireDetail();
             createRepertoireLayout();
         }
+        loadingDialog.hideDialog();
         return view;
     }
 
@@ -70,17 +87,19 @@ public class RepertoireView extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            showCustomLoadingDialog(view);
+            loadingDialog.showDialog();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            mSwipeRefreshLayout.setRefreshing(false);
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
+
         }
 
         @SuppressLint("UseSparseArrays")
@@ -90,7 +109,7 @@ public class RepertoireView extends Fragment {
             Repertoire = new HashMap<>();
 
             String tag_string_req = "req_get_event";
-            if (!session.isRepertoireUp()) {
+
                 StringRequest strReq = new StringRequest(Request.Method.GET,
                         Functions.GET_REPERTOIRE_URL, new Response.Listener<String>() {
 
@@ -108,7 +127,7 @@ public class RepertoireView extends Fragment {
                             Log.d(TAG, response);
                             JSONArray eventsList = (JSONArray) jsonObject.get("repertoire");
                             Iterator i = eventsList.iterator();
-
+                            db.resetRepertoire();
                             int tempID = 0;
 
                             while (i.hasNext()) {
@@ -124,15 +143,16 @@ public class RepertoireView extends Fragment {
 
                                 tempID++;
                             }
-
                             createRepertoireLayout();
                             session.setRepertoire(true);
-
+                            loadingDialog.hideDialog();
                             //loadingDialog.hideDialog();
                         } catch (Exception e) {
                             Log.d(TAG, "ERROR");
                             session.setRepertoire(false);
                             e.printStackTrace();
+                            loadingDialog.hideDialog();
+                            mSwipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -141,11 +161,13 @@ public class RepertoireView extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, "Repertoire error: " + error.getMessage());
                         session.setRepertoire(false);
-                        Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getBaseContext(), "Connection problem", Toast.LENGTH_LONG).show();
+                        loadingDialog.hideDialog();
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
                 RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
-            }
+
 
 
             return null;
@@ -168,7 +190,9 @@ public class RepertoireView extends Fragment {
         super.onResume();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void createRepertoireLayout() {
+
         // Adding request to request queue
         String[] monthName = {"JANUARY", "FEBRUARY",
                 "MARCH", "APRIL", "MAY", "JUNE", "JULY",
@@ -176,7 +200,8 @@ public class RepertoireView extends Fragment {
                 "DECEMBER"};
         Calendar cal = Calendar.getInstance();
         String month = monthName[cal.get(Calendar.MONTH)];
-        tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        final TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
+        tabLayout.removeAllTabs();
         tabLayout.addTab(tabLayout.newTab().setText(month));
         tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 1) % 12]));
         tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 2) % 12]));
@@ -188,24 +213,39 @@ public class RepertoireView extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 8) % 12]));
         tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 9) % 12]));
         tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 10) % 12]));
+        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 11) % 12]));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        pager = (ViewPager) view.findViewById(R.id.pager);
-
-        _adapter = new PagerAdapter(getChildFragmentManager());
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH))+1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 2) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 3) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 4) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 5) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 6) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 7) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 8) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 9) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 10) % 13)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 11) % 13)));
+        final ViewPager  pager = (ViewPager) view.findViewById(R.id.pager);
+        final PagerAdapter _adapter = new PagerAdapter(getChildFragmentManager());
+        _adapter.add(new TabRepertoire(String.valueOf(cal.get(Calendar.MONTH)+1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 2) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 3) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 4) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 5) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 6) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 7) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 8) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 9) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 10) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 11) % 13 + 1)));
+        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 12) % 13 + 1)));
         pager.setAdapter(_adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+//        pager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled( int position, float v, int i1 ) {
+//            }
+//
+//            @Override
+//            public void onPageSelected( int position ) {
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged( int state ) {
+//                enableDisableSwipeRefresh( state == ViewPager.SCROLL_STATE_IDLE );
+//            }
+//        } );
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -223,5 +263,10 @@ public class RepertoireView extends Fragment {
 
             }
         });
+    }
+    private void enableDisableSwipeRefresh(boolean enable) {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(enable);
+        }
     }
 }

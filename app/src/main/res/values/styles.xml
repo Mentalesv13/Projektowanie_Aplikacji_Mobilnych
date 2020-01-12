@@ -22,4 +22,9 @@
         <item name="windowFixedWidthMajor">200%</item>
         <item name="windowFixedWidthMinor">200%</item>
     </style>
+    <style name="fragment_text">
+        <item name="android:textColor">#ffacacac</item>
+        <item name="android:textSize">25dp</item>
+    </style>
+
 </resources>

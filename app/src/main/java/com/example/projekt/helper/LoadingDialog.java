@@ -1,9 +1,10 @@
 package com.example.projekt.helper;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.view.Window;
 import android.widget.ImageView;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
@@ -11,19 +12,18 @@ import com.example.projekt.R;
 
 public class LoadingDialog {
 
-    public void setActivity(Activity activity) {
+    public void setActivity(FragmentActivity activity) {
         this.activity = activity;
     }
 
-    Activity activity;
+    FragmentActivity activity;
     Dialog dialog;
     //..we need the context else we can not create the dialog so get context in constructor
-    public LoadingDialog(Activity activity) {
+    public LoadingDialog(FragmentActivity activity) {
         this.activity = activity;
     }
 
-    public LoadingDialog() {
-    }
+
 
     public void showDialog() {
 

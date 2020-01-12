@@ -49,7 +49,7 @@
 
                     <LinearLayout
                         android:id="@+id/spectacleLayout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/tlo"
                         android:orientation="vertical">
@@ -61,7 +61,8 @@
                             android:layout_gravity="center"
                             android:background="@color/tlo"
                             android:contentDescription="@string/clockicon"
-                            app:srcCompat="@drawable/clock" />
+                            app:srcCompat="@drawable/clock"
+                            tools:visibility="gone" />
 
                         <TextView
                             android:id="@+id/spectacle_Name"
@@ -105,7 +106,8 @@
                             android:layout_marginTop="18dp"
                             android:background="@color/tlo"
                             android:contentDescription="@string/megaphoneicon"
-                            app:srcCompat="@drawable/megaphone" />
+                            app:srcCompat="@drawable/megaphone"
+                            tools:visibility="gone" />
 
                         <TextView
                             android:id="@+id/ll2_tv1"
@@ -149,7 +151,8 @@
                             android:layout_marginTop="18dp"
                             android:background="@color/tlo"
                             android:contentDescription="@string/messageicon"
-                            app:srcCompat="@drawable/haze" />
+                            app:srcCompat="@drawable/haze"
+                            tools:visibility="gone" />
 
                         <TextView
                             android:id="@+id/ll3_tv1"

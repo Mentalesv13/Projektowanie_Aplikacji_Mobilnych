@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -49,6 +50,7 @@ public class Events extends Fragment {
     HashMap<Integer,Event> Events;
     View view;
     LoadingDialog loadingDialog;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     int images[] = {R.drawable.people, R.drawable.premiere, R.drawable.megaphone, R.drawable.haze};
 
@@ -60,23 +62,31 @@ public class Events extends Fragment {
         session = new SessionManager(getContext());
         view = inflater.inflate(R.layout.fragment_wydarzenia, container, false);
         loadingDialog = new LoadingDialog(getActivity());
+        mSwipeRefreshLayout = view.findViewById(R.id.swifeRefresh);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.black, android.R.color.holo_red_dark);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                final EventTask task = new EventTask();
+                task.execute();
+            }
+        });
         if (!session.isEventUp()) {
             final EventTask task = new EventTask();
             task.execute();
         }
         else {
+            loadingDialog.showDialog();
             Events = db.getEventsDetail();
             createEventLayout();
         }
-
+        loadingDialog.hideDialog();
         return view;
     }
-
     private void createEventLayout(){
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        final LinearLayout abc = view.findViewById(R.id.llEvents);
-
+        final LinearLayout abc = view.findViewById(R.id.llEventsView);
+        abc.removeAllViews();
         for (int i = 0; i < Events.size(); i++) {
             Log.d(TAG,"INT: " + i);
             Event temp = Events.get(i);
@@ -99,6 +109,8 @@ public class Events extends Fragment {
             tv1.setText(temp.getSdesc_event());
             abc.addView(custom);
         }
+        mSwipeRefreshLayout.setRefreshing(false);
+
     }
 
     public void showCustomLoadingDialog(View view) {
@@ -118,7 +130,7 @@ public class Events extends Fragment {
     class EventTask extends AsyncTask<Void,Void,Void> {
         @Override
         protected void onPreExecute() {
-            showCustomLoadingDialog(view);
+            loadingDialog.showDialog();
         }
 
         @Override
@@ -155,7 +167,7 @@ public class Events extends Fragment {
                             Log.d(TAG, "Error: " + error);
                             JSONArray eventsList = (JSONArray) jsonObject.get("events");
                             Iterator i = eventsList.iterator();
-
+                            db.resetEvents();
                             int tempID = 0;
 
                             while (i.hasNext()) {
@@ -174,11 +186,13 @@ public class Events extends Fragment {
                             }
                             createEventLayout();
                             session.setEvent(true);
-                            //loadingDialog.hideDialog();
+                            loadingDialog.hideDialog();
                         } catch (Exception e) {
                             Log.d(TAG, "ERROR");
                             session.setEvent(false);
                             e.printStackTrace();
+                            loadingDialog.hideDialog();
+                            mSwipeRefreshLayout.setRefreshing(false);
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -187,7 +201,10 @@ public class Events extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, "Events error: " + error.getMessage());
                         session.setEvent(false);
+                        mSwipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
+                        loadingDialog.hideDialog();
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
 

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swifeRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ABABA9"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tlo">
@@ -15,44 +23,37 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/repertuar" />
 
-    <TextView
-        android:id="@+id/repertuar_tv1"
-        android:layout_width="115dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="140dp"
-        android:background="#D81C5C"
-        android:gravity="center"
-        android:text="@string/repertuar_tv1"
-        android:textColor="#FAFDFE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tablayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="#D71C5C"
+            android:minHeight="?attr/actionBarSize"
+            android:textSize="30sp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/repertuarBanner"
+            app:tabIndicatorColor="#F9FCFD"
+            app:tabMode="scrollable">
 
-        android:background="#D71C5C"
-        android:minHeight="?attr/actionBarSize"
-        android:textSize="30sp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repertuarBanner"
-        app:tabIndicatorColor="#F9FCFD"
-        android:layout_gravity="center_horizontal"
-        app:tabMode="scrollable">
+        </com.google.android.material.tabs.TabLayout>
 
-    </com.google.android.material.tabs.TabLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:animationCache="false"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusableInTouchMode="false"
+            android:isScrollContainer="false"
+            android:keepScreenOn="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tablayout" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tablayout">
-
-    </androidx.viewpager.widget.ViewPager>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

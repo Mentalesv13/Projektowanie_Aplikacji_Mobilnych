@@ -303,7 +303,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        if (checkNetworkConnection()==true) {
+                        if (checkNetworkConnection()) {
                             dialog.dismiss();
                         } else {
                             Toast.makeText(getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();

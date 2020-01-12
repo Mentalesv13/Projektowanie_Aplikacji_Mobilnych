@@ -28,8 +28,35 @@ public class Functions {
     // Get RepertoireView
     public static String GET_REPERTOIRE_URL = MAIN_URL + "db/repertoire.php";
 
-    // Get Seats
+    // Get Seat
     public static String GET_SEATS_URL = MAIN_URL + "db/places.php";
+
+    // POST Seat
+    public static String POST_SEAT_URL = MAIN_URL + "db/sites.php";
+
+    // POST Seat Cancel
+    public static String POST_SEATCANCELED_URL = MAIN_URL + "db/sitesCanceled.php";
+
+    // Get PerformanceOfSpectales
+    public static String GET_POF_URL = MAIN_URL + "db/performancesOfSpectacle.php";
+
+    // POST addTicketsAndOrder
+    public static String POST_TICKET = MAIN_URL + "db/addOrderAndTickets.php";
+
+    // POST updateTickets
+    public static String POST_UTICKET = MAIN_URL + "db/updateTickets.php";
+
+    // POST updateOrders
+    public static String POST_UORDER = MAIN_URL + "db/updateOrder.php";
+
+    // POST sendTicket
+    public static String POST_SEND_TICKET = MAIN_URL + "db/sendTicket.php";
+
+    // POST cancelOrder
+    public static String POST_ORDERCANCELED = MAIN_URL + "db/cancelOrder.php";
+
+    // POST cancelOrder
+    public static String GET_ORDERS_URL = MAIN_URL + "db/orders.php";
 
 
     /**

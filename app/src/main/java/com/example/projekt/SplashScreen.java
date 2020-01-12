@@ -1,7 +1,6 @@
 package com.example.projekt;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.AsyncTask;
@@ -14,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -32,7 +33,7 @@ import java.util.Iterator;
 
 import static com.example.projekt.login.RequestManager.TAG;
 
-public class SplashScreen extends Activity {
+public class SplashScreen extends AppCompatActivity {
     private DatabaseHandler db;
     SessionManager session;
     public void onAttachedToWindow() {
@@ -49,6 +50,9 @@ public class SplashScreen extends Activity {
         db = new DatabaseHandler(getApplicationContext());
         session = new SessionManager(getApplicationContext());
         db.resetTables();
+        session.setRepertoire(false);
+        session.setEvent(false);
+        session.setSpectacle(false);
         final SplashTask task = new SplashTask();
         task.execute();
         //StartAnimations();
@@ -80,7 +84,7 @@ public class SplashScreen extends Activity {
                         waited += 100;
                     }
                     Intent intent = new Intent(SplashScreen.this,
-                            MainActivity.class);
+                            SlideMain.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashScreen.this.finish();
@@ -161,7 +165,6 @@ public class SplashScreen extends Activity {
                     }
                 }
             }, new Response.ErrorListener() {
-
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e(TAG, "Events error: " + error.getMessage());

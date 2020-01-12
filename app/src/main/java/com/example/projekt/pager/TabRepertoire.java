@@ -1,7 +1,9 @@
 package com.example.projekt.pager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,10 +28,12 @@ import com.example.projekt.booking.SeatView;
 import com.example.projekt.entity.Repertoire;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.Functions;
+import com.example.projekt.helper.LoadingDialog;
 import com.example.projekt.login.RequestManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -37,13 +41,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class TabRepertoire extends Fragment {
-    private DatabaseHandler db;
-    String TAG;
-    HashMap<Integer,Repertoire> Repertoires;
-    View view;
+    private String TAG;
+    private HashMap<Integer,Repertoire> Repertoires;
+    private View view;
+    private LoadingDialog loadingDialog;
+    private  String mode;
+    private String btnValue;
+    private String performanceName;
+    private String performanceDate;
+    private String performanceTime;
 
     public TabRepertoire(String TAG) {
         this.TAG = TAG;
@@ -52,8 +62,9 @@ public class TabRepertoire extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        loadingDialog = new LoadingDialog(getActivity());
         // Inflate the layout for this fragment
-        db = new DatabaseHandler(getContext());
+        DatabaseHandler db = new DatabaseHandler(getContext());
         view = inflater.inflate(R.layout.repertoire_pattern, container, false);
         Repertoires = db.getRepertoireDetail(TAG);
         createRepertoireLayout();
@@ -70,14 +81,21 @@ public class TabRepertoire extends Fragment {
                 Repertoire temp = Repertoires.get(i);
                 final View custom = inflater.inflate(R.layout.repertoire_element, null);
 
-                TextView repertoireName = (TextView) custom.findViewById(R.id.repertoireName);
-                TextView repertoireTime = (TextView) custom.findViewById(R.id.repertoireTime);
-                TextView repertoireDate = (TextView) custom.findViewById(R.id.repertoireDate);
+                final TextView repertoireName = (TextView) custom.findViewById(R.id.repertoireName);
+                final TextView repertoireTime = (TextView) custom.findViewById(R.id.repertoireTime);
+                final TextView repertoireDate = (TextView) custom.findViewById(R.id.repertoireDate);
                 TextView repertoireDay = (TextView) custom.findViewById(R.id.repertoireDay);
-                final Button btnBuy = custom.findViewById(R.id.reservationBtn);
-                final Button btnReserve = custom.findViewById(R.id.buyBtn);
+
                 CardView cardBuy = custom.findViewById(R.id.cardViewBuy);
                 CardView cardReserve = custom.findViewById(R.id.cardViewReservation);
+                final Button btnBuy = custom.findViewById(R.id.buyBtn);
+                final Button btnReserve = custom.findViewById(R.id.reservationBtn);
+
+
+                String tempTime = temp.getTime_repertoire();
+
+                final String tmpDate = tempTime.substring(0, 10);
+
 
                 btnBuy.setTag(temp.getId_repertoire());
                 btnReserve.setTag(temp.getId_repertoire());
@@ -85,21 +103,33 @@ public class TabRepertoire extends Fragment {
                 btnBuy.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG);
-                        getSeats(String.valueOf(btnBuy.getTag()));
+                        btnValue = String.valueOf(btnBuy.getTag());
+                        mode = "U";
+                        performanceName = repertoireName.getText().toString();
+                        performanceDate = tmpDate;
+                        performanceTime = repertoireTime.getText().toString();
+
+                        //getSeats(String.valueOf(btnBuy.getTag()),"U");
+                        final seatTask sT= new seatTask();
+                        sT.execute();
                     }
                 });
 
                 btnReserve.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getContext(),"Click",Toast.LENGTH_LONG);
-                        getSeats(String.valueOf(btnReserve.getTag()));
+                        mode = "R";
+                        btnValue = String.valueOf(btnBuy.getTag());
+                        performanceName = repertoireName.getText().toString();
+                        performanceDate = tmpDate;
+                        performanceTime = repertoireTime.getText().toString();
+                        final seatTask sT= new seatTask();
+                        sT.execute();
                     }
                 });
 
                 repertoireName.setText(temp.getName_repertoire());
-                String tempTime = temp.getTime_repertoire();
+
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
                 String date = df.format(Calendar.getInstance().getTime());
                 try {
@@ -116,8 +146,7 @@ public class TabRepertoire extends Fragment {
                     e.printStackTrace();
                 }
 
-                String tempDate = tempTime;
-                tempDate = tempDate.substring(0, 10);
+                String tempDate = tempTime.substring(0, 10);
                 tempTime = tempTime.substring(11, 16);
 
                 //Log.d(TAG, date.toString());
@@ -171,8 +200,8 @@ public class TabRepertoire extends Fragment {
         return "err";
     }
 
-    public void getSeats(final String id){
-        Log.d(TAG,"ID: " + id);
+    public void getSeats(){
+        //Log.d(TAG,"ID: " + id);
         String tag_string_req = "req_seats";
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 Functions.GET_SEATS_URL, new Response.Listener<String>() {
@@ -180,9 +209,12 @@ public class TabRepertoire extends Fragment {
             @Override
             public void onResponse(String response) {
                 //Log.d(TAG, "Reset Password Response: " + response);
-
+                JSONParser parser = new JSONParser();
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
+                    Log.e("TAG", "Log: " + response);
+                    Object obj = parser.parse(response);
+
+                    JSONObject jsonObject = (JSONObject) obj;
                     //boolean error = jsonObject.getBoolean("error");
                     Log.e("TAG", "Log: " + response);
 
@@ -191,16 +223,77 @@ public class TabRepertoire extends Fragment {
 //                    } else {
 //                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
 //                    }
+
+                    //String seats = "{\"Id_Performance\": \"6\"+\"Mode\":\"" + Mode + "\",\"Places:\"";
+                    //seats = seats + (String) jsonObject.get("places") +"/}";
                     String seats = (String) jsonObject.get("places");
+                    String price = (String) jsonObject.get("price");
+                    JSONArray discountList = (JSONArray) jsonObject.get("discount");
+
+                    Iterator i = discountList.iterator();
+                    Double firstZone = null;
+                    Double secondZone = null;
+                    Double thirdZone = null;
+                    Double fourthZone = null;
+
+                    Double firstZoneR = null;
+                    Double secondZoneR = null;
+                    Double thirdZoneR = null;
+                    Double fourthZoneR = null;
+
+                    while (i.hasNext()) {
+                        org.json.simple.JSONObject discount = (org.json.simple.JSONObject) i.next();
+                        String name = (String) discount.get("name");
+                        if(name.contains("first_zone_normal")) {
+                            firstZone = (Double) discount.get("value");
+                        }
+                        else if(name.contains("second_zone_normal")){
+                            secondZone = (Double) discount.get("value");
+                        }
+                        else if(name.contains("third_zone_normal")){
+                            thirdZone = (Double) discount.get("value");
+                        }
+                        else if(name.contains("fourth_zone_normal")) {
+                            fourthZone = (Double) discount.get("value");
+                        }
+                        else if(name.contains("first_zone_reduced")){
+                            firstZoneR = (Double) discount.get("value");
+                        }
+                        else if(name.contains("second_zone_reduced")){
+                            secondZoneR= (Double) discount.get("value");
+                        }
+                        else if(name.contains("third_zone_reduced")) {
+                            thirdZoneR = (Double) discount.get("value");
+                        }
+                        else if(name.contains("fourth_zone_reduced")){
+                            fourthZoneR = (Double) discount.get("value");
+                        }
+
+                    }
 
                     Intent myIntent = new Intent(getActivity(), SeatView.class);
                     myIntent.putExtra("seats", seats);
-                    startActivity(myIntent);
+                    myIntent.putExtra("id", String.valueOf(btnValue));
+                    myIntent.putExtra("performancename", performanceName);
+                    myIntent.putExtra("performancedate", performanceDate);
+                    myIntent.putExtra("performancetime", performanceTime);
+                    myIntent.putExtra("price", price);
+                    myIntent.putExtra("first", firstZone);
+                    myIntent.putExtra("second", secondZone);
+                    myIntent.putExtra("third", thirdZone);
+                    myIntent.putExtra("fourth", fourthZone);
+                    myIntent.putExtra("firstR", firstZoneR);
+                    myIntent.putExtra("secondR", secondZoneR);
+                    myIntent.putExtra("thirdR", thirdZoneR);
+                    myIntent.putExtra("fourthR", fourthZoneR);
+                    myIntent.putExtra("mode", mode);
 
-                } catch (JSONException e) {
-                    // JSON error
+                    startActivity(myIntent);
+                    loadingDialog.hideDialog();
+                } catch (org.json.simple.parser.ParseException e) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
+                    loadingDialog.hideDialog();
                     e.printStackTrace();
-                    Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -208,8 +301,8 @@ public class TabRepertoire extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.e(TAG, "Reset Password Error: " + error.getMessage());
                 Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
+                loadingDialog.hideDialog();
             }
         }) {
 
@@ -217,8 +310,7 @@ public class TabRepertoire extends Fragment {
             protected Map<String, String> getParams() {
                 // Posting parameters to Seat url
                 Map<String, String> params = new HashMap<>();
-
-                params.put("id_performance", id);
+                params.put("id_performance", btnValue);
                 return params;
             }
 
@@ -235,5 +327,30 @@ public class TabRepertoire extends Fragment {
         strReq.setRetryPolicy(new DefaultRetryPolicy(5 * DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, 0));
         strReq.setRetryPolicy(new DefaultRetryPolicy(0, 0, 0));
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    class seatTask extends AsyncTask<Void,Void,Void> {
+        @Override
+        protected void onPreExecute() {
+            loadingDialog.showDialog();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @SuppressLint("UseSparseArrays")
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+        getSeats();
+        return null;
+        }
     }
 }

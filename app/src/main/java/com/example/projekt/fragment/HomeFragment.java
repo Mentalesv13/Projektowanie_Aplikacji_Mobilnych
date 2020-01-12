@@ -4,6 +4,7 @@ package com.example.projekt.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -29,14 +29,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.projekt.MainActivity;
 import com.example.projekt.R;
+import com.example.projekt.SlideMain;
+import com.example.projekt.booking.YourTicket;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.helper.SessionManager;
 import com.example.projekt.login.RegisterActivity;
 import com.example.projekt.login.RequestManager;
-import com.example.projekt.ui.home.MainFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
     private TextView txtName, txtEmail;
-    private Button btnChangePass, btnLogout;
+    private Button btnChangePass, btnLogout, btnTicket;
     private SessionManager session;
     private DatabaseHandler db;
 
@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
         txtName = view.findViewById(R.id.tFullname);
         txtEmail = view.findViewById(R.id.tEmail);
         btnChangePass = view.findViewById(R.id.btnPassword);
+        btnTicket = view.findViewById(R.id.btnTicket);
         btnLogout = view.findViewById(R.id.btnLogout);
 
         // Progress dialog
@@ -100,10 +101,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 logoutUser();
-                ((MainActivity) getActivity()).setActionBarTitle("Home");
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, new MainFragment());
-                ft.commit();
+
+                Intent myIntent = new Intent(getActivity(), SlideMain.class);
+                startActivity(myIntent);
+                getActivity().overridePendingTransition(0, 0);
 
             }
         });
@@ -193,12 +194,25 @@ public class HomeFragment extends Fragment {
                 alertDialog.show();
             }
         });
+
+
+        btnTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), YourTicket.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
     }
+
+
 
     private void logoutUser() {
         session.setLogin(false);
         // Launching the login activity
         Functions logout = new Functions();
+
         logout.logoutUser(getActivity());
         //Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
         //startActivity(intent);

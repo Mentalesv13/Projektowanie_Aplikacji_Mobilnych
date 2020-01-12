@@ -1,70 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swifeRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ABABA9"
+    android:background="@color/tlo"
     android:orientation="vertical">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ABABA9"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="wrap_content"
+        android:background="@color/tlo">
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:visibility="visible">
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:background="@color/tlo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spektakleSearch">
 
-            <ImageView
-                android:id="@+id/spektakleBanner"
-                android:layout_width="wrap_content"
-                android:layout_height="203dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="0dp"
-                android:contentDescription="spektakleBanner"
-                app:srcCompat="@drawable/spektakle"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp"
-                tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/spektakle_tv1"
-                android:layout_width="115dp"
-                android:layout_height="29dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="144dp"
-                android:layout_marginEnd="2dp"
-                android:background="#D81C5C"
-                android:gravity="center"
-                android:text="@string/spektakle_tv1"
-                android:textColor="#FAFDFE"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/spektakleBanner"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="5dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@color/tlo"
+                android:orientation="vertical"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/spektakleBanner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="203dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="0dp"
+                    android:contentDescription="spektakleBanner"
+                    app:srcCompat="@drawable/spektakle"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp"
+                    tools:visibility="visible" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ABABA9"
-                    android:orientation="vertical" />
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/spektakleBanner"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="48dp"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/llEvents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ABABA9"
+                        android:orientation="vertical" />
 
-        </RelativeLayout>
-    </ScrollView>
+                </LinearLayout>
 
-</RelativeLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/spektakleSearch"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/tlo"
+            android:clipToPadding="false"
+            android:duplicateParentState="false"
+            android:fadeScrollbars="false"
+            android:focusableInTouchMode="false"
+            android:lineSpacingExtra="12sp"
+            android:lineSpacingMultiplier="0"
+            android:queryHint="Type to search..."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <requestFocus
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <ListView
+                android:id="@+id/dynamicList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </androidx.appcompat.widget.SearchView>
+    </RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

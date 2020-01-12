@@ -6,22 +6,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".fragment.HomeFragment">
+    tools:context=".login.LoginActivity">
 
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewTicket"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnTicket"
+                android:layout_width="291dp"
+                android:layout_height="47dp"
+                android:layout_centerInParent="true"
+                android:background="#008B5858"
+                android:drawableLeft="@drawable/ticket"
+                android:drawablePadding="-50dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="YOUR TICKET"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="157dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         app:srcCompat="@drawable/logonew" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewReservation"
+        android:id="@+id/cardViewPassword"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_above="@+id/cardView2"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
@@ -36,9 +66,10 @@
             <Button
                 android:id="@+id/btnPassword"
                 android:layout_width="291dp"
-                android:layout_height="47dp"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:background="#008B5858"
+                android:drawableLeft="@drawable/ic_password"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="CHANGE PASSWORD"
                 android:textColor="#fff"
@@ -49,7 +80,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
@@ -64,7 +95,7 @@
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="291dp"
-                android:layout_height="47dp"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:background="#008B5858"
                 android:gravity="center_horizontal|center_vertical"

@@ -48,8 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         inputName = findViewById(R.id.etFullname);
-        inputEmail = findViewById(R.id.etEmail);
-        inputPassword = findViewById(R.id.etPassword);
+        inputEmail = findViewById(R.id.etLogin);
+        inputPassword = findViewById(R.id.etPass);
         btnRegister = findViewById(R.id.btnRegister);
         btnLinkToLogin = findViewById(R.id.tResend);
 

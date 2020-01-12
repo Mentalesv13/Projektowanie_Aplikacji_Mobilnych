@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        inputEmail = findViewById(R.id.etEmail);
-        inputPassword = findViewById(R.id.etPassword);
+        inputEmail = findViewById(R.id.etLogin);
+        inputPassword = findViewById(R.id.etPass);
         btnLogin = findViewById(R.id.btnLogin);
         btnLinkToRegister = findViewById(R.id.tResend);
         btnForgotPass = findViewById(R.id.tForgot);
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                String email = inputEmail.getText().toString().trim();
+                            String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 if (checkNetworkConnection() == true) {
                     // Check for empty data in the form

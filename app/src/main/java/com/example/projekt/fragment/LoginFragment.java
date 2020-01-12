@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -32,8 +31,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.projekt.MainActivity;
 import com.example.projekt.R;
+import com.example.projekt.SlideMain;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.helper.SessionManager;
@@ -68,8 +67,8 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_login_fragment, container, false);
 
-        inputEmail = view.findViewById(R.id.etEmail);
-        inputPassword = view.findViewById(R.id.etPassword);
+        inputEmail = view.findViewById(R.id.etLogin);
+        inputPassword = view.findViewById(R.id.etPass);
         btnLogin = view.findViewById(R.id.btnLogin);
         btnLinkToRegister = view.findViewById(R.id.tResend);
         btnForgotPass = view.findViewById(R.id.tForgot);
@@ -84,6 +83,7 @@ public class LoginFragment extends Fragment {
                         Intent.ACTION_VIEW,
                         Uri.parse("https://www.facebook.com/teatrmuzycznylodz/timeline"));
                 startActivity(browserIntent);
+                //getActivity().overridePendingTransition(0, 0);
             }});
         btnT.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -91,6 +91,7 @@ public class LoginFragment extends Fragment {
                         Intent.ACTION_VIEW,
                         Uri.parse("https://twitter.com/tm_lodz"));
                 startActivity(browserIntent);
+                //getActivity().overridePendingTransition(0, 0);
             }});
         btnP.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -98,6 +99,7 @@ public class LoginFragment extends Fragment {
                         Intent.ACTION_VIEW,
                         Uri.parse("https://www.pinterest.com/teatrmuzyczny/"));
                 startActivity(browserIntent);
+                //getActivity().overridePendingTransition(0, 0);
             }});
         btnI.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -105,6 +107,7 @@ public class LoginFragment extends Fragment {
                         Intent.ACTION_VIEW,
                         Uri.parse("https://www.instagram.com/teatrmuzycznylodz/"));
                 startActivity(browserIntent);
+                //getActivity().overridePendingTransition(0, 0);
             }});
 
         // Progress dialog
@@ -156,9 +159,13 @@ public class LoginFragment extends Fragment {
         // Link to Register Screen
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, new RegisterFragment());
-                ft.commit();
+                //FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                //ft.replace(getActivity().getSupportFragmentManager().findFragmentByTag("fragment"), new RegisterFragment());
+                // ft.commit();
+                SlideMain activity;
+                activity = (SlideMain) getActivity();
+                activity.changeFragment(new RegisterFragment());
+
             }
         });
 
@@ -335,7 +342,7 @@ public class LoginFragment extends Fragment {
 
                         if(Integer.parseInt(json_user.getString("verified")) == 1){
                             db.addUser(json_user.getString(KEY_UID), json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json_user.getString(KEY_CREATED_AT));
-                            Intent upanel = new Intent(getActivity(), MainActivity.class);
+                            Intent upanel = new Intent(getActivity(), SlideMain.class);
                             upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(upanel);
 
@@ -348,6 +355,7 @@ public class LoginFragment extends Fragment {
                             upanel.putExtras(b);
                             upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(upanel);
+                            getActivity().overridePendingTransition(0, 0);
                             getActivity().finish();
                         }
 

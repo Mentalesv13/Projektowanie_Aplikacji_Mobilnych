@@ -30,7 +30,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 11;
+        return 12;
     }
 
 

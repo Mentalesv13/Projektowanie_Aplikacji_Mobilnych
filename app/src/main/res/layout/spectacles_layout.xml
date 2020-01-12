@@ -9,6 +9,106 @@
     android:orientation="vertical"
     android:paddingTop="8dp">
 
+    <LinearLayout
+        android:id="@+id/lowerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/spectacle_image"
+        app:layout_constraintTop_toBottomOf="@+id/spectacle_desc">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewReservation"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_above="@+id/tResend"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#F1EAD8"
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/cardElevation">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+
+                <Button
+                    android:id="@+id/reservationBtn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:drawableLeft="@drawable/ic_date"
+                    android:text="REZERWUJ"
+                    android:textSize="10sp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewBuy"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_above="@+id/tResend"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="@dimen/cardCornerRadius"
+            app:cardElevation="@dimen/cardElevation">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent">
+
+                <Button
+                    android:id="@+id/buyBtn"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginEnd="0dp"
+                    android:drawableStart="@drawable/ic_purchase"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="KUP BILET"
+                    android:textAlignment="center"
+                    android:textColor="#F9FCFD"
+                    android:textSize="12sp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/ll_button3"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="110dp"
+            android:layout_height="34dp"
+            android:layout_weight="1"
+            android:background="#F1EAD8"
+            android:drawableStart="@drawable/obsada"
+            android:padding="10dp"
+            android:text="@string/obsada"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/spectacle_image"
         android:layout_width="113dp"
@@ -27,6 +127,8 @@
         android:textAlignment="viewStart"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/spectacle_image"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,105 +164,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spectacle_image"
         app:layout_constraintTop_toBottomOf="@+id/premiere_date" />
-
-    <LinearLayout
-        android:id="@+id/lowerLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/spectacle_image"
-        app:layout_constraintTop_toBottomOf="@+id/spectacle_desc">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewReservation"
-            android:layout_width="200dp"
-            android:layout_height="35dp"
-            android:layout_above="@+id/tResend"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="#F1EAD8"
-            app:cardCornerRadius="@dimen/cardCornerRadius"
-            app:cardElevation="@dimen/cardElevation">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/reservationBtn"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="200dp"
-                    android:layout_height="34dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:drawableLeft="@drawable/ic_date"
-                    android:text="REZERWUJ"
-                    android:textSize="10sp"
-                    android:visibility="visible" />
-
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewBuy"
-            android:layout_width="200dp"
-            android:layout_height="35dp"
-            android:layout_above="@+id/tResend"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="1"
-            app:cardBackgroundColor="@color/colorAccent"
-            app:cardCornerRadius="@dimen/cardCornerRadius"
-            app:cardElevation="@dimen/cardElevation">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/buyBtn"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="0dp"
-                    android:drawableStart="@drawable/ic_purchase"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="KUP BILET"
-                    android:textAlignment="center"
-                    android:textColor="#F9FCFD"
-                    android:textSize="12sp"
-                    android:visibility="visible" />
-
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/ll_button3"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="110dp"
-            android:layout_height="34dp"
-            android:layout_weight="1"
-            android:background="#F1EAD8"
-            android:drawableStart="@drawable/obsada"
-            android:padding="10dp"
-            android:text="@string/obsada"
-            android:textSize="12sp"
-            android:visibility="gone" />
-
-    </LinearLayout>
 
     <ImageView
         android:id="@+id/imgZoom"

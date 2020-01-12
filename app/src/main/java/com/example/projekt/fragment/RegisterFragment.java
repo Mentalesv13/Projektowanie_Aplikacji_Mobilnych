@@ -22,13 +22,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.projekt.R;
+import com.example.projekt.SlideMain;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.login.EmailVerify;
 import com.example.projekt.login.RegisterActivity;
@@ -55,8 +55,8 @@ public class RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_register_fragment, container, false);
 
         inputName = view.findViewById(R.id.etFullname);
-        inputEmail = view.findViewById(R.id.etEmail);
-        inputPassword = view.findViewById(R.id.etPassword);
+        inputEmail = view.findViewById(R.id.etLogin);
+        inputPassword = view.findViewById(R.id.etPass);
         btnRegister = view.findViewById(R.id.btnRegister);
         btnLinkToLogin = view.findViewById(R.id.tResend);
         btnF = view.findViewById(R.id.btnFacebook);
@@ -134,9 +134,12 @@ public class RegisterFragment extends Fragment {
         btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, new LoginFragment());
-                ft.commit();
+//                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                ft.replace(R.id.content_frame, new LoginFragment());
+//                ft.commit();
+                SlideMain activity;
+                activity = (SlideMain) getActivity();
+                activity.changeFragment(new LoginFragment());
             }
         });
     }
