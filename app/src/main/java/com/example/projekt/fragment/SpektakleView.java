@@ -34,6 +34,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.projekt.R;
@@ -213,74 +214,77 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
     private void createSpectaleLayout() {
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //final LinearLayout abc = view.findViewById(R.id.llEvents);
-        abc.removeAllViews();
 
-        for (int i = 0; i < Spectacles.size(); i++) {
-            //Log.d(TAG, "INT: " + i);
-            Spektakle temp = Spectacles.get(i);
-            final View custom = inflater.inflate(R.layout.spectacles_layout, null);
-            custom.setTag(i);
-            //custom.setOnClickListener(new View.OnClickListener() {
-            //    @Override
-            //    public void onClick(View v) {
-            //        eventOnClickDialog((Integer)custom.getTag());
-            //    }
-            //});
+        if (Spectacles.size()>0) {
+            abc.removeAllViews();
 
-            final Button btnBuy = custom.findViewById(R.id.buyBtn);
-            final Button btnReserve = custom.findViewById(R.id.reservationBtn);
-            final TextView tv = (TextView) custom.findViewById(R.id.spectacle_Name);
-            tv.setText(temp.getName());
-            btnBuy.setTag(temp.getSpektaklId());
-            btnReserve.setTag(temp.getSpektaklId());
+            for (int i = 0; i < Spectacles.size(); i++) {
+                //Log.d(TAG, "INT: " + i);
+                Spektakle temp = Spectacles.get(i);
+                final View custom = inflater.inflate(R.layout.spectacles_layout, null);
+                custom.setTag(i);
+                //custom.setOnClickListener(new View.OnClickListener() {
+                //    @Override
+                //    public void onClick(View v) {
+                //        eventOnClickDialog((Integer)custom.getTag());
+                //    }
+                //});
 
-            btnBuy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mode = "U";
-                    performanceName = tv.getText().toString();
-                    getPerformanceOfSpectales(btnBuy.getTag().toString());
+                final Button btnBuy = custom.findViewById(R.id.buyBtn);
+                final Button btnReserve = custom.findViewById(R.id.reservationBtn);
+                final TextView tv = (TextView) custom.findViewById(R.id.spectacle_Name);
+                tv.setText(temp.getName());
+                btnBuy.setTag(temp.getSpektaklId());
+                btnReserve.setTag(temp.getSpektaklId());
 
-                    //getSeats(String.valueOf(btnBuy.getTag()),"U");
-                }
-            });
+                btnBuy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mode = "U";
+                        performanceName = tv.getText().toString();
+                        getPerformanceOfSpectales(btnBuy.getTag().toString());
 
-            btnReserve.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mode = "R";
-                    performanceName = tv.getText().toString();
-                    getPerformanceOfSpectales(btnBuy.getTag().toString());
-                    //getSeats(String.valueOf(btnReserve.getTag()), "R");
-                }
-            });
+                        //getSeats(String.valueOf(btnBuy.getTag()),"U");
+                    }
+                });
 
-            final ImageView img = custom.findViewById(R.id.spectacle_image);
-            img.setTag(i);
-            img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    imageOnClickDialog((Integer)img.getTag());
-                }
-            });
-            final ImageView zoom = custom.findViewById(R.id.imgZoom);
-            zoom.setImageResource(R.drawable.ic_zoom);
-            zoom.setTag(i);
-            zoom.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    imageOnClickDialog((Integer)zoom.getTag());
-                }
-            });
+                btnReserve.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mode = "R";
+                        performanceName = tv.getText().toString();
+                        getPerformanceOfSpectales(btnBuy.getTag().toString());
+                        //getSeats(String.valueOf(btnReserve.getTag()), "R");
+                    }
+                });
 
-            TextView tv1 = (TextView) custom.findViewById(R.id.premiere_date);
-            TextView tv2 = (TextView) custom.findViewById(R.id.spectacle_desc);
+                final ImageView img = custom.findViewById(R.id.spectacle_image);
+                img.setTag(i);
+                img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        imageOnClickDialog((Integer) img.getTag());
+                    }
+                });
+                final ImageView zoom = custom.findViewById(R.id.imgZoom);
+                zoom.setImageResource(R.drawable.ic_zoom);
+                zoom.setTag(i);
+                zoom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        imageOnClickDialog((Integer) zoom.getTag());
+                    }
+                });
 
-            Picasso.with(getContext()).load("https://ldzmusictheatre.000webhostapp.com/images/"+ temp.getImgUrl()).into(img);
+                TextView tv1 = (TextView) custom.findViewById(R.id.premiere_date);
+                TextView tv2 = (TextView) custom.findViewById(R.id.spectacle_desc);
 
-            tv1.setText(temp.getDate());
-            tv2.setText(temp.getDesc());
-            abc.addView(custom);
+                Picasso.with(getContext()).load("https://ldzmusictheatre.000webhostapp.com/images/" + temp.getImgUrl()).into(img);
+
+                tv1.setText(temp.getDate());
+                tv2.setText(temp.getDesc());
+                abc.addView(custom);
+            }
         }
         mSwipeRefreshLayout.setRefreshing(false);
     }
@@ -444,9 +448,15 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
                         createSpectaleLayout();
                         loadingDialog.hideDialog();
                     } catch (Exception e) {
-                        noInternetConnectionDialog();
+                        //noInternetConnectionDialog();
                         Log.d(TAG, "ERROR");
-                        session.setSpectacle(false);
+                        if(session.isSpectacleUp()){session.setSpectacle(true);
+                            Spectacles = db.getSpectaclesDetail();
+                            createSpectaleLayout();}
+                        else {
+                            session.setSpectacle(false);
+                        }
+
                         e.printStackTrace();
                         loadingDialog.hideDialog();
                         mSwipeRefreshLayout.setRefreshing(false);
@@ -457,8 +467,13 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e(TAG, "Events error: " + error.getMessage());
-                    noInternetConnectionDialog();
-                    session.setSpectacle(false);
+                    //noInternetConnectionDialog();
+                    if(session.isSpectacleUp()){session.setSpectacle(true);
+                        Spectacles = db.getSpectaclesDetail();
+                        createSpectaleLayout();}
+                    else {
+                        session.setSpectacle(false);
+                    }
                     mSwipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
                     loadingDialog.hideDialog();
@@ -467,6 +482,11 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
             });
 
             // Adding request to request queue
+            int socketTimeout = 15000;
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            strReq.setRetryPolicy(policy);
             RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
 
             return null;
@@ -480,7 +500,7 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
         Spektakle temp = Spectacles.get(index);
         ImageView bigImage = dialogView.findViewById(R.id.bigImage);
         bigImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        Picasso.with(getContext()).load("https://ldzmusictheatre.000webhostapp.com/images/"+ temp.getImgUrl()).into(bigImage);
+        Picasso.with(getContext()).load(Functions.IMAGES_URL + temp.getImgUrl()).into(bigImage);
         dialogBuilder.setView(dialogView);
         //dialogBuilder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialogBuilder.setCancelable(false);
@@ -540,7 +560,7 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
 //                    } else {
 //                        Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
 //                    }
-
+                    PoFHashMap = new HashMap<Integer, PoF>();
                     JSONArray PoFlist = (JSONArray) jsonObject.get("performances");
                     Iterator i = PoFlist.iterator();
 
@@ -604,8 +624,11 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
         };
 
         // Adding request to volley request queue
-        strReq.setRetryPolicy(new DefaultRetryPolicy(5 * DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, 0));
-        strReq.setRetryPolicy(new DefaultRetryPolicy(0, 0, 0));
+        int socketTimeout = 15000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

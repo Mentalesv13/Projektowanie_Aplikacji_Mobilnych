@@ -16,8 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.projekt.R;
@@ -149,7 +151,12 @@ public class RepertoireView extends Fragment {
                             //loadingDialog.hideDialog();
                         } catch (Exception e) {
                             Log.d(TAG, "ERROR");
-                            session.setRepertoire(false);
+                            if(session.isRepertoireUp()){session.setRepertoire(true);
+                                Repertoire = db.getRepertoireDetail();
+                                createRepertoireLayout();}
+                            else {
+                                session.setRepertoire(false);
+                            }
                             e.printStackTrace();
                             loadingDialog.hideDialog();
                             mSwipeRefreshLayout.setRefreshing(false);
@@ -160,12 +167,23 @@ public class RepertoireView extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, "Repertoire error: " + error.getMessage());
-                        session.setRepertoire(false);
+                        if(session.isRepertoireUp()){session.setRepertoire(true);
+                            Repertoire = db.getRepertoireDetail();
+                            createRepertoireLayout();}
+                        else {
+                            session.setRepertoire(false);
+                        }
                         Toast.makeText(getActivity().getBaseContext(), "Connection problem", Toast.LENGTH_LONG).show();
                         loadingDialog.hideDialog();
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+
+            int socketTimeout = 15000;
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            strReq.setRetryPolicy(policy);
                 RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
 
 
@@ -201,37 +219,38 @@ public class RepertoireView extends Fragment {
         Calendar cal = Calendar.getInstance();
         String month = monthName[cal.get(Calendar.MONTH)];
         final TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
-        tabLayout.removeAllTabs();
-        tabLayout.addTab(tabLayout.newTab().setText(month));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 1) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 2) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 3) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 4) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 5) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 6) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 7) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 8) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 9) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 10) % 12]));
-        tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 11) % 12]));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        if (Repertoire.size()>0) {
+            tabLayout.removeAllTabs();
+            tabLayout.addTab(tabLayout.newTab().setText(month));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 1) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 2) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 3) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 4) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 5) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 6) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 7) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 8) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 9) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 10) % 12]));
+            tabLayout.addTab(tabLayout.newTab().setText(monthName[(cal.get(Calendar.MONTH) + 11) % 12]));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager  pager = (ViewPager) view.findViewById(R.id.pager);
-        final PagerAdapter _adapter = new PagerAdapter(getChildFragmentManager());
-        _adapter.add(new TabRepertoire(String.valueOf(cal.get(Calendar.MONTH)+1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 2) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 3) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 4) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 5) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 6) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 7) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 8) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 9) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 10) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 11) % 13 + 1)));
-        _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 12) % 13 + 1)));
-        pager.setAdapter(_adapter);
-        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            final ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
+            final PagerAdapter _adapter = new PagerAdapter(getChildFragmentManager());
+            _adapter.add(new TabRepertoire(String.valueOf(cal.get(Calendar.MONTH) + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 2) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 3) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 4) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 5) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 6) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 7) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 8) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 9) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 10) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 11) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 12) % 13 + 1)));
+            pager.setAdapter(_adapter);
+            pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 //        pager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
 //            @Override
 //            public void onPageScrolled( int position, float v, int i1 ) {
@@ -247,22 +266,23 @@ public class RepertoireView extends Fragment {
 //            }
 //        } );
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                pager.setCurrentItem(tab.getPosition());
-            }
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    pager.setCurrentItem(tab.getPosition());
+                }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
 
-            }
+                }
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
 
-            }
-        });
+                }
+            });
+        }
     }
     private void enableDisableSwipeRefresh(boolean enable) {
         if (mSwipeRefreshLayout != null) {

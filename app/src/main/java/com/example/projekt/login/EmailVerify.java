@@ -23,12 +23,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.projekt.MainActivity;
 import com.example.projekt.R;
+import com.example.projekt.SlideMain;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.helper.SessionManager;
@@ -159,7 +161,7 @@ public class EmailVerify extends AppCompatActivity {
                         logout.logoutUser(getApplicationContext());
                         db.addUser(json_user.getString(KEY_UID), json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json_user.getString(KEY_CREATED_AT));
                         session.setLogin(true);
-                        Intent upanel = new Intent(EmailVerify.this, MainActivity.class);
+                        Intent upanel = new Intent(EmailVerify.this, SlideMain.class);
                         upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(upanel);
                         finish();
@@ -206,6 +208,11 @@ public class EmailVerify extends AppCompatActivity {
 
         };
         // Adding request to request queue
+        int socketTimeout = 15000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
@@ -273,6 +280,11 @@ public class EmailVerify extends AppCompatActivity {
 
         };
         // Adding request to request queue
+        int socketTimeout = 15000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

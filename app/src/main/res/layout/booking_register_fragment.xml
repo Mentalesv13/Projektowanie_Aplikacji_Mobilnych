@@ -354,7 +354,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="Account"
+            android:text="Profile"
             android:textColor="#000000" />
 
         <TextView
@@ -391,7 +391,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:text="Confirmation" />
+            android:text="Confirm" />
     </TableRow>
 
     <TextView

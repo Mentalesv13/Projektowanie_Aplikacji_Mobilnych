@@ -31,16 +31,13 @@ public class SlideMain extends FragmentActivity implements View.OnClickListener{
     private ResideMenuItem itemHome;
     private ResideMenuItem itemRepertoire;
     private ResideMenuItem itemSpectacle;
-    private ResideMenuItem itemNews;
+    //private ResideMenuItem itemNews;
     private ResideMenuItem itemMap;
-    private ResideMenuItem itemContact;
+    //private ResideMenuItem itemContact;
     private ResideMenuItem itemEvents;
     private ResideMenuItem itemLogin;
     private TextView title;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +57,9 @@ public class SlideMain extends FragmentActivity implements View.OnClickListener{
         resideMenu.setBackground(R.drawable.blue);
         resideMenu.attachToActivity(this);
         resideMenu.setMenuListener(menuListener);
+
         //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip.
-         resideMenu.setScaleValue(0.45f);
+        resideMenu.setScaleValue(0.6f);
 
         // create menu items;
         itemHome     = new ResideMenuItem(this, R.drawable.ic_home,     "Home");

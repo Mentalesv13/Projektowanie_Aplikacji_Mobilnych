@@ -64,6 +64,7 @@ public class YourTicket extends AppCompatActivity {
             }
         });
         email = db.getEmail();
+        Log.e("TICKET", email);
         loadingDialog = new LoadingDialog(this);
         mSwipeRefreshLayout = findViewById(R.id.swifeRefresh);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.black, android.R.color.holo_red_dark);
@@ -103,7 +104,7 @@ public class YourTicket extends AppCompatActivity {
 
             String tag_string_req = "req_get_event";
 
-            StringRequest strReq = new StringRequest(Request.Method.GET,
+            StringRequest strReq = new StringRequest(Request.Method.POST,
                     Functions.GET_ORDERS_URL, new Response.Listener<String>() {
 
                 @Override
@@ -191,10 +192,6 @@ public class YourTicket extends AppCompatActivity {
                         }
                         mSwipeRefreshLayout.setRefreshing(false);
 
-
-
-
-
                         loadingDialog.hideDialog();
                     } catch (Exception e) {
                         Log.d(TAG, "ERROR");
@@ -221,18 +218,14 @@ public class YourTicket extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     // Posting parameters to login url
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("email", email);
+                    params.put("userEmail", email);
 
                     return params;
                 }
 
             };
-
-
             // Adding request to request queue
             RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
-
-
             return null;
         }
     }

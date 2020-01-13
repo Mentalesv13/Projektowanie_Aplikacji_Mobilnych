@@ -58,6 +58,11 @@ public class Functions {
     // POST cancelOrder
     public static String GET_ORDERS_URL = MAIN_URL + "db/orders.php";
 
+    // POST cancelOrder
+    public static String IMAGES_URL = MAIN_URL + "images/";
+
+
+
 
     /**
      * Function to logout user

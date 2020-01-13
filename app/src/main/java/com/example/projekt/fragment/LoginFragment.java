@@ -29,6 +29,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.projekt.R;
@@ -37,7 +38,6 @@ import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.helper.SessionManager;
 import com.example.projekt.login.EmailVerify;
-import com.example.projekt.login.LoginActivity;
 import com.example.projekt.login.RequestManager;
 
 import org.json.JSONException;
@@ -47,7 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginFragment extends Fragment {
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = SlideMain.class.getSimpleName();
 
     private static String KEY_UID = "uid";
     private static String KEY_NAME = "name";
@@ -394,6 +394,11 @@ public class LoginFragment extends Fragment {
         };
 
         // Adding request to request queue
+        int socketTimeout = 15000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

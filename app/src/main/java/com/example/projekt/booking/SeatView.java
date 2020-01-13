@@ -45,7 +45,6 @@ import com.example.projekt.entity.Seat;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.helper.SessionManager;
-import com.example.projekt.login.RegisterActivity;
 import com.example.projekt.login.RequestManager;
 import com.example.projekt.payment.Config;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -70,15 +69,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static java.math.BigDecimal.ROUND_HALF_UP;
+
 public class SeatView extends AppCompatActivity implements View.OnClickListener {
-    ViewGroup layout;
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String TAG = SeatView.class.getSimpleName();
 
     private String seats = null;
     private String mode = null;
-    private  String price = null;
+    private String price = null;
     private Double first = null;
-    private  Double second = null;
+    private Double second = null;
     private Double third = null;
     private Double fourth = null;
     private Double firstR = null;
@@ -95,12 +95,9 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
     private static PayPalConfiguration paypalConfig = new PayPalConfiguration()
             .environment(Config.PAYPAL_ENVIRONMENT).clientId(
                     Config.PAYPAL_CLIENT_ID);
+
     private static final int REQUEST_CODE_PAYMENT = 1;
 
-    private static final String FORMAT = "%02d:%02d";
-
-    List<TextView> seatViewList = new ArrayList<>();
-    TextView processing;
     int seatSize = 90;
     int seatGaping = 5;
 
@@ -112,31 +109,39 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
     int STATUS_RESERVED = 6;
     char selectedCount = 0;
     String selectedIds = "";
+    String email;
     boolean firstFlag = false;
-    Button btnBack;
-    HashSet<Integer> seatID = new HashSet<>();
-    FloatingActionButton seatFab;
 
-    HashMap<Integer, Seat> seatsMap;
     private ProgressDialog pDialog;
     private DatabaseHandler db;
+    private SessionManager session;
+    private String exaltedOrb = null;
 
-    String email;
+    HashSet<Integer> seatID = new HashSet<>();
+    HashMap<Integer, Seat> seatsMap;
     HashMap<Integer,Integer> seatsString;
     HashMap<Integer,Integer> seatsID;
     HashMap<Integer,Double> seatsType;
     HashMap<Integer,Character> seatsTag;
+    List<TextView> seatViewList = new ArrayList<>();
+
     final DecimalFormat df = new DecimalFormat("####0.00");
+    private static final String FORMAT = "%02d:%02d";
+
     JSONObject jsonSeat;
     JSONObject jsonRaw;
     JSONObject jsonFinal;
-
     JSONObject jsonBuy = new JSONObject();
     JSONArray jsonArray;
     JSONArray jsonArray1;
     JSONArray jsonArray2;
+
+    ViewGroup layout;
+    FloatingActionButton seatFab;
     TextView firstPrice, secondPrice, thirdPrice, fourthPrice;
-    private SessionManager session;
+    Button btnBack;
+    TextView processing;
+
     long time = 0;
 
 
@@ -216,15 +221,8 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 if (seatID.size()!=0) {
                     processing.setVisibility(View.VISIBLE);
                     btnBack.setVisibility(View.INVISIBLE);
-                    //JSONObject jsonPlaces = new JSONObject();
-                    Iterator value = seatID.iterator();
-//                    json_places = "{\"Id_Performance\":\""+idPerformance+"\", \"Mode\": \""+mode + "\", \"Places\":[";
-//                    json_places = json_places + "{\"place_no\":\"" + String.valueOf(value.next()) + "\"}";
-//                    while (value.hasNext()) {
-//                        json_places = json_places + ",{\"place_no\":\"" + String.valueOf(value.next()) + "\"}";
-//                        }
-//                    json_places = json_places + "]}";
 
+                    Iterator value = seatID.iterator();
 
                     try {
                         jsonArray = new JSONArray();
@@ -459,9 +457,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 seatViewList.add(view);
                 view.setOnClickListener(this);
                 seatsString.put(count,index-1);
-//                seatsID.put(index-1, count);
-//                seatsRow.put(count, row);
-//                seatsTag.put(count, (int) view.getTag());
                 if(!balcony) {
                     seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"PARTER", false));
                 }else {seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"BALKON", false));}
@@ -477,7 +472,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 view.setId(count);
                 view.setGravity(Gravity.CENTER);
                 view.setBackgroundResource(R.drawable.ic_seats_book);
-                //view.setText(count + "");
                 view.setText(seat + "");
 
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
@@ -487,8 +481,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 seatViewList.add(view);
                 view.setOnClickListener(this);
                 seatsString.put(count,index-1);
-//                seatsID.put(index-1, count);
-//                seatsRow.put(count, row);
                 if(!balcony) {
                     seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"PARTER", false));
                 }else {seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"BALKON", false));}
@@ -503,7 +495,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 view.setId(count);
                 view.setGravity(Gravity.CENTER);
                 view.setBackgroundResource(R.drawable.ic_seats_secondzone);
-                //view.setText(count + "");
                 view.setText(seat + "");
 
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
@@ -513,8 +504,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 seatViewList.add(view);
                 view.setOnClickListener(this);
                 seatsString.put(count,index-1);
-//                seatsID.put(index-1, count);
-//                seatsRow.put(count, row);
                 if(!balcony) {
                     seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"PARTER", false));
                 }else {seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"BALKON", false));}
@@ -529,7 +518,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 view.setId(count);
                 view.setGravity(Gravity.CENTER);
                 view.setBackgroundResource(R.drawable.ic_seats_thirdzone);
-                //view.setText(count + "");
                 view.setText(seat + "");
 
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
@@ -539,8 +527,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 seatViewList.add(view);
                 view.setOnClickListener(this);
                 seatsString.put(count,index-1);
-//                seatsID.put(index-1, count);
-//                seatsRow.put(count, row);
                 if(!balcony) {
                     seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"PARTER", false));
                 }else {seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"BALKON", false));}
@@ -557,7 +543,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 view.setGravity(Gravity.CENTER);
 
                 view.setBackgroundResource(R.drawable.ic_seats_vierzone);
-                //view.setText(count + "");
                 view.setText(seat + "");
                 ;
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
@@ -567,8 +552,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 seatViewList.add(view);
                 view.setOnClickListener(this);
                 seatsString.put(count,index-1);
-//                seatsID.put(index-1, count);
-//                seatsRow.put(count, row);
                 if(!balcony) {
                     seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"PARTER", false));
                 }else {seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"BALKON", false));}
@@ -585,7 +568,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 view.setId(count);
                 view.setGravity(Gravity.CENTER);
                 view.setBackgroundResource(R.drawable.ic_seats_reserved);
-                //view.setText(count + "");
                 view.setText(seat + "");
 
                 view.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
@@ -595,8 +577,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 seatViewList.add(view);
                 view.setOnClickListener(this);
                 seatsString.put(count,index-1);
-//                seatsID.put(index-1, count);
-//                seatsRow.put(count, row);
                 if(!balcony) {
                     seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"PARTER", false));
                 }else {seatsMap.put(count, new Seat(row, count, seat, index - 1, (int) view.getTag(),Double.parseDouble(price)*seatsType.get(view.getTag()),"BALKON", false));}
@@ -688,11 +668,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
             Toast.makeText(this, "Seat " + view.getId() + " is Reserved", Toast.LENGTH_SHORT).show();
         }
     }
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//    }
-
 
     public void buyLayout() {
 
@@ -999,6 +974,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         final TextView otpCountDown = findViewById(R.id.tCountDown);
 
         final Button btnRegister = dialogView.findViewById(R.id.btnRegister);
+        final Button btnLogin = dialogView.findViewById(R.id.btnLogin);
         final Button btnVerify = dialogView.findViewById(R.id.btnVerify);
         tForgot.setVisibility(View.INVISIBLE);
         final TextView tLogin = dialogView.findViewById(R.id.tResend);
@@ -1011,6 +987,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         registerLayout.setVisibility(View.GONE);
         loginLayout.setVisibility(View.VISIBLE);
+        emailLayout.setVisibility(View.GONE);
     }
 });
         final TextView tRegister = dialogView.findViewById(R.id.tResend1);
@@ -1022,6 +999,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
             public void onClick(View v) {
                 loginLayout.setVisibility(View.GONE);
                 registerLayout.setVisibility(View.VISIBLE);
+                emailLayout.setVisibility(View.GONE);
             }
         });
 
@@ -1107,6 +1085,11 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                 };
                 // Adding request to request queue
+                int socketTimeout = 15000;
+                RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                strReq.setRetryPolicy(policy);
                 RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
             }
         });
@@ -1196,6 +1179,11 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                 };
                 // Adding request to request queue
+                int socketTimeout = 15000;
+                RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                strReq.setRetryPolicy(policy);
                 RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
             }
         });
@@ -1210,6 +1198,101 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
             public void onCancel(DialogInterface dialog) {
 
                 dialog.dismiss();
+
+            }
+        });
+
+
+
+        final TextView inputEmailL = dialogView.findViewById(R.id.etEmail);
+        final TextView inputPasswordL = dialogView.findViewById(R.id.etPassword);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                email = inputEmailL.getText().toString().trim();
+                final String password = inputPasswordL.getText().toString().trim();
+                String tag_string_req = "req_login";
+
+                pDialog.setMessage("Logging in ...");
+                showDialog();
+
+                StringRequest strReq = new StringRequest(Request.Method.POST,
+                        Functions.LOGIN_URL, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "Login Response: " + response);
+                        hideDialog();
+
+                        try {
+                            JSONObject jObj = new JSONObject(response);
+                            boolean error = jObj.getBoolean("error");
+
+                            // Check for error node in json
+                            if (!error) {
+                                // user successfully logged in
+                                JSONObject json_user = jObj.getJSONObject("user");
+
+                                Functions logout = new Functions();
+                                logout.logoutUser(getApplicationContext());
+
+                                    db.addUser(json_user.getString(KEY_UID), json_user.getString(KEY_NAME), json_user.getString(KEY_EMAIL), json_user.getString(KEY_CREATED_AT));
+                                    session.setLogin(true);
+
+                                if(session.isLoggedIn()){
+                                    email = db.getEmail();
+                                    if (!mode.equals("R")){
+                                        launchPayPalPayment();}
+                                    else {
+                                        sendTicket();
+                                        confirmLayout();
+                                    }
+                                }
+
+
+                            } else {
+                                // Error in login. Get the error message
+                                String errorMsg = jObj.getString("message");
+                                Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "Login Error: " + error.getMessage());
+                        Toast.makeText(getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
+                        hideDialog();
+                    }
+                }) {
+
+                    @Override
+                    protected Map<String, String> getParams() {
+                        // Posting parameters to login url
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("email", email);
+                        params.put("password", password);
+
+                        return params;
+                    }
+
+                };
+
+                int socketTimeout = 15000;
+                RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                strReq.setRetryPolicy(policy);
+                // Adding request to request queue
+                RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
+
 
             }
         });
@@ -1246,22 +1329,22 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                                             registerLayout.setVisibility(View.GONE);
                                             emailLayout.setVisibility(View.VISIBLE);
                                             pDialog.dismiss();
-//                                            new CountDownTimer(70000, 1000) { // adjust the milli seconds here
-//
-//                                                @SuppressLint({"SetTextI18n", "DefaultLocale"})
-//                                                public void onTick(long millisUntilFinished) {
-//                                                    otpCountDown.setVisibility(View.VISIBLE);
-//                                                    otpCountDown.setText(""+String.format(FORMAT,
-//                                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-//                                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-//                                                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)) ));
-//                                                }
-//
-//                                                public void onFinish() {
-//                                                    otpCountDown.setVisibility(View.GONE);
-//                                                    btnResend.setEnabled(true);
-//                                                }
-//                                            }.start();
+                                            new CountDownTimer(70000, 1000) { // adjust the milli seconds here
+
+                                                @SuppressLint({"SetTextI18n", "DefaultLocale"})
+                                                public void onTick(long millisUntilFinished) {
+                                                    otpCountDown.setVisibility(View.VISIBLE);
+                                                    otpCountDown.setText(""+String.format(FORMAT,
+                                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                                                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)) ));
+                                                }
+
+                                                public void onFinish() {
+                                                    otpCountDown.setVisibility(View.GONE);
+                                                    btnResend.setEnabled(true);
+                                                }
+                                            }.start();
 
 
 
@@ -1298,7 +1381,11 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                                 }
 
                             };
-
+                            int socketTimeout = 15000;
+                            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                            strReq.setRetryPolicy(policy);
                             // Adding request to request queue
                             RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
                         } else {
@@ -1927,6 +2014,11 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         String tag_string_req = "req_seatcancel";
+        int socketTimeout = 15000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjReq.setRetryPolicy(policy);
         RequestManager.getInstance().addToRequestQueue(jsonObjReq , tag_string_req);
     }
 
@@ -2002,16 +2094,20 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
         // If you have shipping cost, add it here
         BigDecimal shipping = new BigDecimal("0.0");
-        String dfformat = df.format(results * 0.08);
-        double prices = Double.parseDouble(dfformat);
+        double resultALL = (results * 0.08);
+        //String dfformat = df.format(resultALL);
+        //double prices = Double.parseDouble(dfformat);
         // If you have tax, add it here
-        BigDecimal tax = new BigDecimal(prices);
+        BigDecimal tax = new BigDecimal(resultALL);
+
+        tax = tax.setScale(2,ROUND_HALF_UP);
 
         PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(
                 shipping, subtotal, tax);
 
         BigDecimal amount = subtotal.add(shipping).add(tax);
 
+        Log.e("TAG", tax.toString());
         PayPalPayment payment = new PayPalPayment(
                 amount,
                 Config.DEFAULT_CURRENCY,
@@ -2082,7 +2178,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 60000;
+        int socketTimeout = 15000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2119,8 +2215,13 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                         JSONObject payment_json = confirm.getPayment()
                                 .toJSONObject();
 
-                        String total = df.format(results + results * 0.08);
+                        double values = (results + (results * 0.08));
+
+                        String total = df.format(values);
+                        total = total.replaceAll(",",".");
                         String currency_code = payment_json.getString("currency_code");
+
+                        exaltedOrb = currency_code;
 
                         Log.e(TAG, "paymentId: " + paymentId
                                 + ", payment_json: " + payment_client);
@@ -2147,6 +2248,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
      * */
     private void verifyPaymentOnServer(final String paymentId,
                                        final String payment_client, final String total, final String currency) {
+        Log.e("VERIFY LOG", "" + "paymentId: "+paymentId + " userEmail: " + email + " orderId: " + orderId + " total: " + total + " currency: " +  currency);
         // Showing progress dialog before making request
         pDialog.setMessage("Verifying payment...");
         showDialog();
@@ -2157,31 +2259,19 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "verify payment: " + response.toString());
+                Log.d(TAG, "" + "paymentId: "+ paymentId + " userEmail: " + email + " orderId" + orderId + " total: " + total + " currency: " +  currency);
 
-                try {
-                    JSONObject res = new JSONObject(response);
-                    //boolean error = res.getBoolean("error");
-                    //String message = res.getString("message");
+                //JSONObject res = new JSONObject(response);
 
-                    // user error boolean flag to check for errors
-                    sendTicket();
-                    confirmLayout();
+                //boolean error = res.getBoolean("error");
+                //String message = res.getString("message");
 
+                sendTicket();
+                confirmLayout();
 
-                    Toast.makeText(getApplicationContext(), "Success",
-                            Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Success",
+                        Toast.LENGTH_SHORT).show();
 
-
-//                    if (!error) {
-//                        // empty the cart
-//                        //productsInCart.clear();
-//                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),
-                            "Connection Problem. Try again later..", Toast.LENGTH_SHORT).show();
-                }
 
                 // hiding the progress dialog
                 hideDialog();
@@ -2216,7 +2306,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 60000;
+        int socketTimeout = 15000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2252,7 +2342,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
-
         final LinearLayout abc = dialogView.findViewById(R.id.pof_llayout);
 
         TextView namePerformance = dialogView.findViewById(R.id.performanceName);
@@ -2274,10 +2363,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         try {
 
             for (int i = 0; i < jsonArray2.length(); i++) {
-
-                //jsonBuy.put("Id_Performance", idPerformance);
-                //jsonBuy.put("Mode", mode);
-
                 JSONObject places = jsonArray2.getJSONObject(i);
 
                 final View custom = inflater.inflate(R.layout.buy_element, null);
@@ -2303,7 +2388,6 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 seatPosition.setText(temp.getSeatType());
                 results = results + temp.getSeatPrice();
                 abc.addView(custom);
-
             }
 
         } catch (JSONException e) {
@@ -2314,41 +2398,11 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         dialogBuilder.setView(dialogView);
         dialogBuilder.setCancelable(false);
 
-
-
-
-//        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(final DialogInterface dialog, int which) {
-//                buyLayout();
-//            }
-//        });
-
         final AlertDialog alertDialog = dialogBuilder.create();
-
-
-
 
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(final DialogInterface dialog) {
-//                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-//                b.setEnabled(true);
-//
-//                b.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        if(session.isLoggedIn()){
-//
-//
-//                        }
-//
-//                        else  {
-//                            createNoAccountBuyLayout();
-//                        }
-//
-//                    }
-//                });
             }
         });
         alertDialog.show();
@@ -2356,6 +2410,14 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void sendTicket() {
+        double values = (results + (results * 0.08));
+
+        String total = df.format(values);
+        total = total.replaceAll(",",".");
+
+        final String finalTotal = total;
+
+        Log.e("TAG", finalTotal);
 
         StringRequest verifyReq = new StringRequest(Request.Method.POST,
                 Functions.POST_SEND_TICKET, new Response.Listener<String>() {
@@ -2393,6 +2455,13 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 params.put("performanceName", performanceName);
                 params.put("performanceDate", performanceDate);
                 params.put("performanceTime", performanceTime);
+                params.put("price", finalTotal);
+                if (mode.equals("R")){
+                    params.put("currency", "PLN");
+                }else {
+                    params.put("currency", exaltedOrb);
+                }
+
 
                 //params.put("paymentClientJson", payment_client);
 
@@ -2401,7 +2470,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 60000;
+        int socketTimeout = 15000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);

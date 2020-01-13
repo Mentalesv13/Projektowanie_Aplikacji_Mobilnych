@@ -84,11 +84,11 @@
                     android:layout_marginEnd="0dp"
                     android:drawableStart="@drawable/ic_purchase"
                     android:gravity="center"
-                    android:padding="10dp"
+                    android:padding="11dp"
                     android:text="KUP BILET"
                     android:textAlignment="center"
                     android:textColor="#F9FCFD"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:visibility="visible" />
 
             </RelativeLayout>
@@ -121,7 +121,7 @@
 
     <TextView
         android:id="@+id/spectacle_Name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/spektakle_ll_tv1"
         android:textAlignment="viewStart"

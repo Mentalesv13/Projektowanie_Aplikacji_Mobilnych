@@ -21,8 +21,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.projekt.R;
@@ -86,29 +88,31 @@ public class Events extends Fragment {
     private void createEventLayout(){
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final LinearLayout abc = view.findViewById(R.id.llEventsView);
-        abc.removeAllViews();
-        for (int i = 0; i < Events.size(); i++) {
-            Log.d(TAG,"INT: " + i);
-            Event temp = Events.get(i);
-            final View custom = inflater.inflate(R.layout.fragment_wydarzenia2, null);
-            custom.setTag(i);
-            custom.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    eventOnClickDialog((Integer)custom.getTag());
-                }
-            });
-            ImageView img = custom.findViewById(R.id.llEvent_img);
-            TextView tv = (TextView) custom.findViewById(R.id.llEvent_tv1);
-            TextView tv1 = (TextView) custom.findViewById(R.id.llEvent_tv2);
+        //if (Events.size()>0) {
+            abc.removeAllViews();
+            for (int i = 0; i < Events.size(); i++) {
+                Log.d(TAG, "INT: " + i);
+                Event temp = Events.get(i);
+                final View custom = inflater.inflate(R.layout.fragment_wydarzenia2, null);
+                custom.setTag(i);
+                custom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        eventOnClickDialog((Integer) custom.getTag());
+                    }
+                });
+                ImageView img = custom.findViewById(R.id.llEvent_img);
+                TextView tv = (TextView) custom.findViewById(R.id.llEvent_tv1);
+                TextView tv1 = (TextView) custom.findViewById(R.id.llEvent_tv2);
 
-            Random generator = new Random();
+                Random generator = new Random();
 
-            img.setImageResource(images[generator.nextInt(images.length)]);
-            tv.setText(temp.getName_event());
-            tv1.setText(temp.getSdesc_event());
-            abc.addView(custom);
-        }
+                img.setImageResource(images[generator.nextInt(images.length)]);
+                tv.setText(temp.getName_event());
+                tv1.setText(temp.getSdesc_event());
+                abc.addView(custom);
+            }
+        //}
         mSwipeRefreshLayout.setRefreshing(false);
 
     }
@@ -189,7 +193,12 @@ public class Events extends Fragment {
                             loadingDialog.hideDialog();
                         } catch (Exception e) {
                             Log.d(TAG, "ERROR");
-                            session.setEvent(false);
+                            if(session.isEventUp()){session.setEvent(true);
+                                Events = db.getEventsDetail();
+                                createEventLayout();}
+                            else {
+                                session.setEvent(false);
+                            }
                             e.printStackTrace();
                             loadingDialog.hideDialog();
                             mSwipeRefreshLayout.setRefreshing(false);
@@ -200,15 +209,28 @@ public class Events extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, "Events error: " + error.getMessage());
-                        session.setEvent(false);
+                        if(session.isEventUp()){session.setEvent(true);
+                        Events = db.getEventsDetail();
+                        createEventLayout();}
+                        else {
+                            session.setEvent(false);
+                        }
                         mSwipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
                         loadingDialog.hideDialog();
                         mSwipeRefreshLayout.setRefreshing(false);
+
                     }
                 });
 
                 // Adding request to request queue
+
+            int socketTimeout = 15000;
+            RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+            strReq.setRetryPolicy(policy);
+
                 RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
 
 

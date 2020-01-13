@@ -35,7 +35,6 @@ import com.example.projekt.booking.YourTicket;
 import com.example.projekt.helper.DatabaseHandler;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.helper.SessionManager;
-import com.example.projekt.login.RegisterActivity;
 import com.example.projekt.login.RequestManager;
 
 import org.json.JSONException;
@@ -45,7 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HomeFragment extends Fragment {
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String TAG = SlideMain.class.getSimpleName();
 
     private TextView txtName, txtEmail;
     private Button btnChangePass, btnLogout, btnTicket;
@@ -195,7 +194,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         btnTicket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,13 +204,10 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-
     private void logoutUser() {
         session.setLogin(false);
         // Launching the login activity
         Functions logout = new Functions();
-
         logout.logoutUser(getActivity());
         //Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
         //startActivity(intent);

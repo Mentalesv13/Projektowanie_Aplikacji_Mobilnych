@@ -23,15 +23,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.projekt.R;
 import com.example.projekt.SlideMain;
 import com.example.projekt.helper.Functions;
 import com.example.projekt.login.EmailVerify;
-import com.example.projekt.login.RegisterActivity;
 import com.example.projekt.login.RequestManager;
 
 import org.json.JSONException;
@@ -41,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterFragment extends Fragment {
-    private static final String TAG = RegisterActivity.class.getSimpleName();
+    private static final String TAG = SlideMain.class.getSimpleName();
 
     private Button btnRegister;
     private TextView btnLinkToLogin;
@@ -210,6 +211,11 @@ public class RegisterFragment extends Fragment {
         };
 
         // Adding request to request queue
+        int socketTimeout = 15000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

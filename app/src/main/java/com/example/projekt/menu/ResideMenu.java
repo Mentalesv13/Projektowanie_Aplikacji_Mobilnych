@@ -72,7 +72,7 @@ public class ResideMenu extends FrameLayout {
     private int pressedState = PRESSED_DOWN;
     private List<Integer> disabledSwipeDirection = new ArrayList<Integer>();
     // Valid scale factor is between 0.0f and 1.0f.
-    private float mScaleValue = 0.5f;
+    private float mScaleValue = 0.8f;
 
     private boolean mUse3D;
     private static final int ROTATE_Y_ANGLE = 10;
