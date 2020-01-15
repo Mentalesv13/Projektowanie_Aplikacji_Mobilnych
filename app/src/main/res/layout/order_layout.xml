@@ -12,7 +12,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView36"
+        android:layout_below="@+id/textView31"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
@@ -40,23 +40,13 @@
         android:paddingLeft="4dp" />
 
     <TextView
-        android:id="@+id/Price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView35"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_toEndOf="@+id/textView37"
-        tools:visibility="invisible" />
-
-    <TextView
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView37"
+        android:layout_below="@+id/performanceName"
         android:layout_marginTop="4dp"
         android:paddingLeft="4dp"
-        android:text="Data:" />
+        android:text="Date: " />
 
     <TextView
         android:id="@+id/textView37"
@@ -65,7 +55,7 @@
         android:layout_below="@+id/Order"
         android:layout_marginTop="4dp"
         android:paddingLeft="4dp"
-        android:text="Tytuł spektaklu:" />
+        android:text="Spectacle title: " />
 
     <TextView
         android:id="@+id/performanceName"
@@ -86,7 +76,7 @@
         android:layout_toEndOf="@+id/textView37" />
 
     <TextView
-        android:id="@+id/performanceTime"
+        android:id="@+id/Price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/performanceDate"
@@ -94,6 +84,15 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/textView37"
         tools:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/performanceDate"
+        android:layout_marginTop="4dp"
+        android:paddingLeft="4dp"
+        android:text="Total price: " />
 
 
 </RelativeLayout>

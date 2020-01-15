@@ -137,6 +137,8 @@ public class YourTicket extends AppCompatActivity {
                             //String time = (String) events.get("performanceTime");
                             String order = (String) events.get("orderId");
                             String status = (String) events.get("status");
+                            String price = (String) events.get("price");
+                            String currency = (String) events.get("currency");
                             JSONArray ticketsList = (JSONArray) events.get("tickets");
 
 
@@ -182,10 +184,11 @@ public class YourTicket extends AppCompatActivity {
                             TextView Order = (TextView) custom.findViewById(R.id.Order);
                             TextView performanceName = (TextView) custom.findViewById(R.id.performanceName);
                             TextView performanceDate = (TextView) custom.findViewById(R.id.performanceDate);
-                            //TextView performanceTime = (TextView) custom.findViewById(R.id.performanceTime);
+                            TextView prices = (TextView) custom.findViewById(R.id.Price);
 
                             performanceName.setText(name);
                             performanceDate.setText(date);
+                            prices.setText(price + " " + currency);
                             //performanceTime.setText(time);
                             Order.setText("#" + order + " " + status);
                             abc.addView(custom);

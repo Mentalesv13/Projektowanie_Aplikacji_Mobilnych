@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/gradient">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewAccount"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_above="@+id/tableRow"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="4dp"
+        android:layout_weight="1"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="@dimen/cardCornerRadius"
+        app:cardElevation="@dimen/cardElevation">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <Button
+                android:id="@+id/doneBtn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="0dp"
+                android:text="CONFIRM"
+                android:textAlignment="center"
+                android:textColor="#F9FCFD"
+                android:textSize="12sp"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="0dp"
+        android:padding="8dp"
+        android:text="The seat booking session has expired, to continue the process and select seats again press CONFIRM."
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/splashImage"
         android:font="@font/anaheim"
-        android:text="Teatr Muzyczny w Łodzi"
+        android:text="Musical Theatre of Lodz"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"

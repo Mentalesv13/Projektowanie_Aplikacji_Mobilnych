@@ -4,6 +4,8 @@ package com.example.projekt.ui.events;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -197,7 +199,10 @@ public class Events extends Fragment {
                                 Events = db.getEventsDetail();
                                 createEventLayout();}
                             else {
-                                session.setEvent(false);
+                                if (checkNetworkConnection()) {
+                                    session.setEvent(false);
+                                    noInternetConnectionDialog();
+                                }
                             }
                             e.printStackTrace();
                             loadingDialog.hideDialog();
@@ -213,7 +218,10 @@ public class Events extends Fragment {
                         Events = db.getEventsDetail();
                         createEventLayout();}
                         else {
-                            session.setEvent(false);
+                            if (!checkNetworkConnection()) {
+                                session.setEvent(false);
+                                noInternetConnectionDialog();
+                            }
                         }
                         mSwipeRefreshLayout.setRefreshing(false);
                         Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
@@ -222,6 +230,10 @@ public class Events extends Fragment {
 
                     }
                 });
+//            if (!checkNetworkConnection() && !session.isEventUp()) {
+//                session.setEvent(false);
+//                noInternetConnectionDialog();
+//            }
 
                 // Adding request to request queue
 
@@ -273,6 +285,57 @@ public class Events extends Fragment {
                     @Override
                     public void onClick(View view) {
                             dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        } else return false;
+    }
+
+        private void noInternetConnectionDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_internet_connection, null);
+        ImageView imageWhoops = dialogView.findViewById(R.id.Whoops);
+        imageWhoops.setImageResource(R.drawable.whoops);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCancelable(false);
+
+        dialogBuilder.setPositiveButton("Reload", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // empty
+            }
+        });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setEnabled(true);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (checkNetworkConnection()) {
+                            final EventTask task = new EventTask();
+                            task.execute();
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }

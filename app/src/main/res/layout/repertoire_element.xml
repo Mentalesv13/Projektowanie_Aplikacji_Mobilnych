@@ -119,7 +119,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:drawableLeft="@drawable/ic_date"
-                        android:text="REZERWUJ"
+                        android:text="RESERVATION"
                         android:textSize="10sp"
                         android:visibility="visible" />
 
@@ -154,7 +154,7 @@
                         android:drawableStart="@drawable/ic_purchase"
                         android:gravity="center"
                         android:padding="10dp"
-                        android:text="KUP BILET"
+                        android:text="BUY TICKET"
                         android:textAlignment="center"
                         android:textColor="#F9FCFD"
                         android:textSize="12sp"

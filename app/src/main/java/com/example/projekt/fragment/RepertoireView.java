@@ -2,6 +2,10 @@ package com.example.projekt.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,9 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
@@ -153,9 +159,14 @@ public class RepertoireView extends Fragment {
                             Log.d(TAG, "ERROR");
                             if(session.isRepertoireUp()){session.setRepertoire(true);
                                 Repertoire = db.getRepertoireDetail();
-                                createRepertoireLayout();}
+                                createRepertoireLayout();
+                            }
                             else {
-                                session.setRepertoire(false);
+                                if(checkNetworkConnection()){
+                                    session.setRepertoire(false);
+                                    noInternetConnectionDialog();
+                                }
+
                             }
                             e.printStackTrace();
                             loadingDialog.hideDialog();
@@ -171,14 +182,20 @@ public class RepertoireView extends Fragment {
                             Repertoire = db.getRepertoireDetail();
                             createRepertoireLayout();}
                         else {
-                            session.setRepertoire(false);
+                            if(!checkNetworkConnection()){
+                                session.setRepertoire(false);
+                                noInternetConnectionDialog();
+                            }
                         }
                         Toast.makeText(getActivity().getBaseContext(), "Connection problem", Toast.LENGTH_LONG).show();
                         loadingDialog.hideDialog();
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
-
+//            if(checkNetworkConnection() && !session.isRepertoireUp()){
+//                session.setRepertoire(false);
+//                noInternetConnectionDialog();
+//            }
             int socketTimeout = 15000;
             RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -237,7 +254,8 @@ public class RepertoireView extends Fragment {
 
             final ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
             final PagerAdapter _adapter = new PagerAdapter(getChildFragmentManager());
-            _adapter.add(new TabRepertoire(String.valueOf(cal.get(Calendar.MONTH) + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf(cal.get(Calendar.MONTH) % 13 + 1)));
+            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 1) % 13 + 1)));
             _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 2) % 13 + 1)));
             _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 3) % 13 + 1)));
             _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 4) % 13 + 1)));
@@ -248,7 +266,6 @@ public class RepertoireView extends Fragment {
             _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 9) % 13 + 1)));
             _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 10) % 13 + 1)));
             _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 11) % 13 + 1)));
-            _adapter.add(new TabRepertoire(String.valueOf((cal.get(Calendar.MONTH) + 12) % 13 + 1)));
             pager.setAdapter(_adapter);
             pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 //        pager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
@@ -288,5 +305,57 @@ public class RepertoireView extends Fragment {
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setEnabled(enable);
         }
+    }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        } else return false;
+    }
+
+    private void noInternetConnectionDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_internet_connection, null);
+
+        ImageView imageWhoops = dialogView.findViewById(R.id.Whoops);
+        imageWhoops.setImageResource(R.drawable.whoops);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCancelable(false);
+
+        dialogBuilder.setPositiveButton("Reload", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // empty
+            }
+        });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setEnabled(true);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (checkNetworkConnection()) {
+                            final RepertoireTask task = new RepertoireTask();
+                            task.execute();
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
     }
 }

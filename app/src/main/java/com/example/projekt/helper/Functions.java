@@ -1,6 +1,8 @@
 package com.example.projekt.helper;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class Functions {
 
@@ -84,4 +86,6 @@ public class Functions {
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
     }
+
+
 }

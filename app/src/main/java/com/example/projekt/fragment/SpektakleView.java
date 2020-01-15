@@ -374,7 +374,7 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
         }
     }
 
-    public void showCustomLoadingDialog(View view) {
+    public void showCustomLoadingDialog() {
 
         loadingDialog.showDialog();
 
@@ -454,7 +454,10 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
                             Spectacles = db.getSpectaclesDetail();
                             createSpectaleLayout();}
                         else {
-                            session.setSpectacle(false);
+                            if(checkNetworkConnection() && !session.isSpectacleUp() ){
+                                session.setSpectacle(false);
+                                noInternetConnectionDialog();
+                            }
                         }
 
                         e.printStackTrace();
@@ -472,14 +475,20 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
                         Spectacles = db.getSpectaclesDetail();
                         createSpectaleLayout();}
                     else {
-                        session.setSpectacle(false);
+                        if(!checkNetworkConnection()){
+                            session.setSpectacle(false);
+                            noInternetConnectionDialog();
+                        }
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
                     Toast.makeText(getActivity().getApplicationContext(), "Connection problem", Toast.LENGTH_LONG).show();
                     loadingDialog.hideDialog();
-                    loadingDialog.hideDialog();
                 }
             });
+//            if(checkNetworkConnection() && !session.isSpectacleUp() ){
+//                session.setSpectacle(false);
+//                noInternetConnectionDialog();
+//            }
 
             // Adding request to request queue
             int socketTimeout = 15000;
@@ -692,7 +701,7 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
     }
         if (!isPlayed){
             TextView noPlayed = new TextView(getContext());
-            noPlayed.setText("W najbliższych dniach wybrany spektakl nie znajduje się w repertuarze");
+            noPlayed.setText("In the coming days the selected spectacle is not in the repertoire.");
             noPlayed.setTextSize(18);
             noPlayed.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             abc.setGravity(Gravity.CENTER);
@@ -876,59 +885,6 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    private void noInternetConnectionDialog() {
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.fragment_internet_connection, null);
-
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.setTitle("No Internet Connection");
-        dialogBuilder.setCancelable(false);
-
-        //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);
-
-        dialogBuilder.setPositiveButton("Reload",  new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // empty
-            }
-        });
-
-        final AlertDialog alertDialog = dialogBuilder.create();
-
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(final DialogInterface dialog) {
-                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                b.setEnabled(true);
-
-                b.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        if (checkNetworkConnection()==true) {
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-
-        alertDialog.show();
-    }
-
-    public boolean checkNetworkConnection() {
-        ConnectivityManager connectManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnected())
-        {
-            return true;
-        }
-        else return false;
-    }
-
     class pofTask extends AsyncTask<Void,Void,Void> {
         @Override
         protected void onPreExecute() {
@@ -995,5 +951,56 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
             getSeats();
             return null;
         }
+    }
+
+    public boolean checkNetworkConnection() {
+        ConnectivityManager connectManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = connectManager.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        } else return false;
+    }
+
+    private void noInternetConnectionDialog() {
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.fragment_internet_connection, null);
+        ImageView imageWhoops = dialogView.findViewById(R.id.Whoops);
+        imageWhoops.setImageResource(R.drawable.whoops);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCancelable(false);
+
+        dialogBuilder.setPositiveButton("Reload", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // empty
+            }
+        });
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                final Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setEnabled(true);
+
+                b.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (checkNetworkConnection()) {
+                            final SpectacleTask task = new SpectacleTask();
+                            task.execute();
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(getActivity().getApplicationContext(), "Check Internet connection!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
     }
 }

@@ -36,7 +36,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="@color/tlo"
                     android:gravity="center"
-                    android:text="@string/menu_wydarzenia"
+                    android:text="EVENTS"
                     android:textColor="@color/pinktext"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"

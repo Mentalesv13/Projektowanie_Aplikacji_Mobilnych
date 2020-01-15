@@ -2,11 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
-    tools:context=".login.LoginActivity">
+    android:background="@drawable/gradient">
 
     <TextView
         android:id="@+id/textView8"
@@ -14,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buyTime"
         android:layout_marginLeft="8dp"
-        android:text="Tytuł spektaklu:" />
+        android:text="Spectacle title: " />
 
     <TextView
         android:id="@+id/performanceName"
@@ -38,7 +36,7 @@
         android:layout_toEndOf="@+id/textView8" />
 
     <TextView
-        android:id="@+id/performanceTime"
+        android:id="@+id/Price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/performanceDate"
@@ -54,7 +52,7 @@
         android:layout_below="@+id/performanceName"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
-        android:text="Data:" />
+        android:text="Date: " />
 
     <TextView
         android:id="@+id/textView11"
@@ -63,7 +61,7 @@
         android:layout_below="@+id/performanceDate"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
-        android:text="Godzina:" />
+        android:text="Time: " />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -102,7 +100,7 @@
             android:id="@+id/textView30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cena biletów:"
+            android:text="Ticket price: "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@id/textView30"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -119,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Podatek VAT:"
+            android:text="VAT: "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/textView30"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -137,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:text="Podsumowanie:"
+            android:text="Total price: "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -148,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="48dp"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/textView30"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -177,7 +175,6 @@
             android:layout_marginLeft="4dp"
             android:background="@drawable/round"
             android:paddingLeft="6dp"
-            android:password="false"
             android:text="1"
             android:textColor="#000000" />
 
@@ -196,7 +193,6 @@
             android:layout_marginLeft="4dp"
             android:background="@drawable/roundblack"
             android:paddingLeft="6dp"
-            android:password="false"
             android:text="2"
             android:textColor="#FFFFFF" />
 
@@ -214,7 +210,6 @@
             android:layout_marginLeft="4dp"
             android:background="@drawable/roundblack"
             android:paddingLeft="6dp"
-            android:password="false"
             android:text="3"
             android:textColor="#FFFFFF" />
 
@@ -232,7 +227,6 @@
             android:layout_marginLeft="4dp"
             android:background="@drawable/roundblack"
             android:paddingLeft="6dp"
-            android:password="false"
             android:text="4"
             android:textColor="#FFFFFF" />
 
@@ -259,7 +253,6 @@
             android:layout_marginLeft="4dp"
             android:background="@drawable/round"
             android:paddingLeft="6dp"
-            android:password="false"
             android:text="1"
             android:textColor="#000000" />
 
@@ -277,7 +270,6 @@
             android:layout_marginLeft="4dp"
             android:background="@drawable/roundblack"
             android:paddingLeft="6dp"
-            android:password="false"
             android:text="2"
             android:textColor="#FFFFFF" />
 
@@ -295,7 +287,6 @@
             android:layout_marginLeft="4dp"
             android:background="@drawable/roundblack"
             android:paddingLeft="6dp"
-            android:password="false"
             android:text="3"
             android:textColor="#FFFFFF" />
 

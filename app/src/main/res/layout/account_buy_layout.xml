@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/gradient"
-    android:gravity="center"
-    tools:context=".login.LoginActivity">
+    android:gravity="center">
 
 
     <androidx.cardview.widget.CardView
@@ -84,7 +82,7 @@
                 android:layout_marginEnd="0dp"
                 android:drawableStart="@drawable/ic_password"
                 android:padding="10dp"
-                android:text="CREATE ACCOUNT"
+                android:text="Continue with account"
                 android:textAlignment="center"
                 android:textColor="#F9FCFD"
                 android:textSize="12sp"

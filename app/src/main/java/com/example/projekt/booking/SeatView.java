@@ -100,6 +100,8 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
     int seatSize = 90;
     int seatGaping = 5;
+    boolean doneFlag = false;
+    boolean closeFlag = false;
 
     int STATUS_FIRST = 1;
     int STATUS_SECOND = 2;
@@ -319,8 +321,8 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                                 Log.d("TAG", response.toString());
 
                                 try {
-                                    if (response.getString("error").contains("false")){ time = 900000; buyLayout();}
-                                    else{Toast.makeText(getApplicationContext(),"Wybrane miejsce jest zajęte.",Toast.LENGTH_LONG).show();
+                                    if (response.getString("error").contains("false")){ time = 900000; closeFlag = false; buyLayout();}
+                                    else{Toast.makeText(getApplicationContext(),"The selected seat is reserved.",Toast.LENGTH_LONG).show();
                                     seats = response.getString("places");
                                     createLayout();
                                     }
@@ -363,7 +365,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                 }
                 else {
-                    Toast.makeText(SeatView.this,"Nie wybrano żadnego miejsca.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SeatView.this,"No seat selected.", Toast.LENGTH_LONG).show();
                     seatFab.setEnabled(true);
                 }
             }
@@ -694,7 +696,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
         TextView namePerformance = dialogView.findViewById(R.id.performanceName);
         TextView datePerformance = dialogView.findViewById(R.id.performanceDate);
-        TextView timePerformance = dialogView.findViewById(R.id.performanceTime);
+        TextView timePerformance = dialogView.findViewById(R.id.Price);
 
         namePerformance.setText(performanceName);
         datePerformance.setText(performanceDate);
@@ -750,8 +752,8 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                             seatsMap.put(Integer.parseInt(id),temp1);
                             prices.setText(df.format(results) + " PLN");
-                            resultTax.setText(df.format(results*0.08));
-                            resultPrice.setText(df.format(results + results*0.08));
+                            resultTax.setText(df.format(results*0.08) + " PLN");
+                            resultPrice.setText(df.format(results + results*0.08)+ " PLN");
                         }
                     });
 
@@ -795,6 +797,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onCancel(DialogInterface dialog) {
+                closeFlag = true;
                 seatCancel();
                 orderCancel();
                 seatFab.setEnabled(true);
@@ -809,6 +812,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, int which) {
+                closeFlag = true;
                 seatCancel();
                 orderCancel();
                 seatFab.setEnabled(true);
@@ -894,11 +898,11 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
             public void onTick(long millisUntilFinished) {
 
-                buyTime.setText("Pozostały czas: " + getFormattedTimeString(millisUntilFinished/1000));
+                buyTime.setText("Remaining time: " + getFormattedTimeString(millisUntilFinished/1000));
                 time = millisUntilFinished;
             }
             public void onFinish() {
-
+                sessionTimeout();
             }
         }.start();
 
@@ -1457,10 +1461,11 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
             public void onTick(long millisUntilFinished) {
 
-                buyTime.setText("Pozostały czas: " + getFormattedTimeString(millisUntilFinished/1000));
+                buyTime.setText("Remaining time: " + getFormattedTimeString(millisUntilFinished/1000));
             }
             public void onFinish() {
 
+                sessionTimeout();
             }
         }.start();
 
@@ -1505,7 +1510,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onCancel(DialogInterface dialog) {
-
+                closeFlag = true;
                 seatCancel();
                 orderCancel();
                 createLayout();
@@ -1566,10 +1571,10 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
             public void onTick(long millisUntilFinished) {
 
-                buyTime1.setText("Pozostały czas: " + getFormattedTimeString(millisUntilFinished/1000));
+                buyTime1.setText("Remaining time: " + getFormattedTimeString(millisUntilFinished/1000));
             }
             public void onFinish() {
-
+                sessionTimeout();
             }
         }.start();
 
@@ -1616,7 +1621,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
             @Override
             public void onCancel(DialogInterface dialog) {
-
+                closeFlag = true;
                 seatCancel();
                 orderCancel();
                 createLayout();
@@ -1677,10 +1682,10 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
             public void onTick(long millisUntilFinished) {
 
-                buyTime1.setText("Pozostały czas: " + getFormattedTimeString(millisUntilFinished/1000));
+                buyTime1.setText("Remaining time: " + getFormattedTimeString(millisUntilFinished/1000));
             }
             public void onFinish() {
-
+                sessionTimeout();
             }
         }.start();
 
@@ -1705,7 +1710,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
             timeStr = "-";
         }
 
-        if (min > 0) {
+        if (min >= 0) {
             timeStr += min;
         }
         if (sec >= 10) {
@@ -1976,6 +1981,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void seatCancel() {
+
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Functions.POST_SEATCANCELED_URL, jsonSeat,
@@ -2061,7 +2067,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 60000;
+        int socketTimeout = 15000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2338,7 +2344,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                     startActivity(upanel);
                 }
 
-                finish();
+                //finish();
             }
         });
 
@@ -2410,6 +2416,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void sendTicket() {
+        doneFlag = true;
         double values = (results + (results * 0.08));
 
         String total = df.format(values);
@@ -2426,13 +2433,9 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
             public void onResponse(String response) {
                 Log.d(TAG, "SEND_TICKET: " + response.toString());
 
-                try {
-                    JSONObject res = new JSONObject(response);
+                //JSONObject res = new JSONObject(response);
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
         }, new Response.ErrorListener() {
 
@@ -2456,12 +2459,12 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                 params.put("performanceDate", performanceDate);
                 params.put("performanceTime", performanceTime);
                 params.put("price", finalTotal);
-                if (mode.equals("R")){
+
+                if (mode.contains("R")){
                     params.put("currency", "PLN");
                 }else {
                     params.put("currency", exaltedOrb);
                 }
-
 
                 //params.put("paymentClientJson", payment_client);
 
@@ -2477,7 +2480,41 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         verifyReq.setRetryPolicy(policy);
 
         // Adding request to request queue
-        //AppController.getInstance().addToRequestQueue(verifyReq);
         RequestManager.getInstance().addToRequestQueue(verifyReq,"SEND_TICKET");
+    }
+
+    public void sessionTimeout() {
+        if(!doneFlag) {
+            seatCancel();
+        }
+        if(!closeFlag) {
+            final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(SeatView.this, R.style.MyAlertDialogTheme);
+            LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialogView = inflater.inflate(R.layout.buy_session, null);
+            //results = 0.0;
+            Button doneBtn = dialogView.findViewById(R.id.doneBtn);
+
+            doneBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent upanel = new Intent(SeatView.this, SlideMain.class);
+                    upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(upanel);
+                    finish();
+                }
+            });
+            dialogBuilder.setView(dialogView);
+            dialogBuilder.setCancelable(false);
+
+            final AlertDialog alertDialog = dialogBuilder.create();
+
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(final DialogInterface dialog) {
+                }
+            });
+            alertDialog.show();
+        }
     }
 }
