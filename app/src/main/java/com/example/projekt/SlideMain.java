@@ -37,12 +37,14 @@ public class SlideMain extends FragmentActivity implements View.OnClickListener{
     private ResideMenuItem itemEvents;
     private ResideMenuItem itemLogin;
     private TextView title;
+    //private String backTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.slide_navigation_main);
         mContext = this;
+        //ackTitle = "Home";
         session = new SessionManager(getApplicationContext());
         setUpMenu();
         if( savedInstanceState == null )
@@ -146,11 +148,13 @@ public class SlideMain extends FragmentActivity implements View.OnClickListener{
 //            title.setText("Contact");
         }else if (view == itemLogin){
 
-            if(session.isLoggedIn()){title.setText("Profile");
+            if(session.isLoggedIn()){
                 changeFragment(new HomeFragment());
+                title.setText("Profile");
             }else {
-                title.setText("Log In");
+
                 changeFragment(new LoginFragment());
+                title.setText("Log In");
             }
         }
 
@@ -178,15 +182,23 @@ public class SlideMain extends FragmentActivity implements View.OnClickListener{
         }
     }
     public void changeFragment(Fragment targetFragment){
+        //backTitle = title.getText().toString();
         resideMenu.clearIgnoredViewList();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment, targetFragment, "fragment")
+                //.addToBackStack(null)
                 .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
     }
 
-    // What good method is to access resideMenu？
+
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        title.setText(backTitle);
+//    }
+
     public ResideMenu getResideMenu(){
         return resideMenu;
     }

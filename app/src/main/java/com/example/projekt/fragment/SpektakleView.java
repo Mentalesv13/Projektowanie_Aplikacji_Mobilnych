@@ -491,7 +491,7 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
 //            }
 
             // Adding request to request queue
-            int socketTimeout = 15000;
+            int socketTimeout = 10000;
             RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -633,7 +633,7 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
         };
 
         // Adding request to volley request queue
-        int socketTimeout = 15000;
+        int socketTimeout = 10000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -880,8 +880,11 @@ public class SpektakleView extends Fragment implements onKeyboardVisibilityListe
         };
 
         // Adding request to volley request queue
-        strReq.setRetryPolicy(new DefaultRetryPolicy(5 * DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, 0));
-        strReq.setRetryPolicy(new DefaultRetryPolicy(0, 0, 0));
+        int socketTimeout = 10000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        strReq.setRetryPolicy(policy);
         RequestManager.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 

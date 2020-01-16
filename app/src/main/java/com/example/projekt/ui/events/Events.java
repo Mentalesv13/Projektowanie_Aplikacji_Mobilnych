@@ -93,7 +93,7 @@ public class Events extends Fragment {
         //if (Events.size()>0) {
             abc.removeAllViews();
             for (int i = 0; i < Events.size(); i++) {
-                Log.d(TAG, "INT: " + i);
+                //Log.d(TAG, "INT: " + i);
                 Event temp = Events.get(i);
                 final View custom = inflater.inflate(R.layout.fragment_wydarzenia2, null);
                 custom.setTag(i);
@@ -181,7 +181,7 @@ public class Events extends Fragment {
                                 Long id = (Long) events.get("id_event");
                                 String name = (String) events.get("name_event");
                                 String sdesc = (String) events.get("sdesc_event");
-                                sdesc = sdesc + " \n[ Czytaj dalej... ]";
+                                sdesc = sdesc + " \n[ Read more... ]";
                                 String desc = (String) events.get("desc_event");
                                 //Log.d(TAG, "ID: " + id + "Name: " + name + "Sdesc: " + sdesc + "desc: " + desc);
 
@@ -237,7 +237,7 @@ public class Events extends Fragment {
 
                 // Adding request to request queue
 
-            int socketTimeout = 15000;
+            int socketTimeout = 10000;
             RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -261,7 +261,7 @@ public class Events extends Fragment {
         tv2.setText(temp.getDesc_event());
 
         dialogBuilder.setView(dialogView);
-        dialogBuilder.setTitle("More info");
+        //dialogBuilder.setTitle("More info");
         dialogBuilder.setCancelable(false);
 
         //final EditText mEditEmail = dialogView.findViewById(R.id.etEmailR);

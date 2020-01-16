@@ -262,9 +262,9 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                         Toast.makeText(SeatView.this,"Connection problem", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-                    JsonObjectRequest jsonObjReq1 = new JsonObjectRequest(Request.Method.POST,
+                    final JsonObjectRequest jsonObjReq1 = new JsonObjectRequest(Request.Method.POST,
                             Functions.POST_TICKET, jsonRaw,
                             new Response.Listener<JSONObject>() {
 
@@ -310,7 +310,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                     jsonObjReq1.setTag("TAG");
                     // Adding request to request queue
-                    queue.add(jsonObjReq1);
+                    //queue.add(jsonObjReq1);
 
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         Functions.POST_SEAT_URL, jsonSeat,
@@ -321,7 +321,10 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                                 Log.d("TAG", response.toString());
 
                                 try {
-                                    if (response.getString("error").contains("false")){ time = 900000; closeFlag = false; buyLayout();}
+                                    if (response.getString("error").contains("false")){ time = 900000; closeFlag = false;
+                                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                                        queue.add(jsonObjReq1);
+                                    buyLayout();}
                                     else{Toast.makeText(getApplicationContext(),"The selected seat is reserved.",Toast.LENGTH_LONG).show();
                                     seats = response.getString("places");
                                     createLayout();
@@ -1089,7 +1092,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                 };
                 // Adding request to request queue
-                int socketTimeout = 15000;
+                int socketTimeout = 10000;
                 RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -1183,7 +1186,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                 };
                 // Adding request to request queue
-                int socketTimeout = 15000;
+                int socketTimeout = 10000;
                 RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -1289,7 +1292,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
 
                 };
 
-                int socketTimeout = 15000;
+                int socketTimeout = 10000;
                 RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -1385,7 +1388,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
                                 }
 
                             };
-                            int socketTimeout = 15000;
+                            int socketTimeout = 10000;
                             RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2020,7 +2023,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         String tag_string_req = "req_seatcancel";
-        int socketTimeout = 15000;
+        int socketTimeout = 10000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2067,7 +2070,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 15000;
+        int socketTimeout = 10000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2184,7 +2187,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 15000;
+        int socketTimeout = 10000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2312,7 +2315,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 15000;
+        int socketTimeout = 10000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -2473,7 +2476,7 @@ public class SeatView extends AppCompatActivity implements View.OnClickListener 
         };
 
         // Setting timeout to volley request as verification request takes sometime
-        int socketTimeout = 15000;
+        int socketTimeout = 10000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);

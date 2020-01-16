@@ -41,7 +41,7 @@ public class SplashScreen extends AppCompatActivity {
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
     }
-    /** Called when the activity is first created. */
+
     Thread splashTread;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,9 +50,9 @@ public class SplashScreen extends AppCompatActivity {
         db = new DatabaseHandler(getApplicationContext());
         session = new SessionManager(getApplicationContext());
         db.resetTables();
-        session.setRepertoire(false);
-        session.setEvent(false);
-        session.setSpectacle(false);
+        //session.setRepertoire(false);
+        //session.setEvent(false);
+        //session.setSpectacle(false);
         final SplashTask task = new SplashTask();
         task.execute();
         //StartAnimations();
@@ -147,7 +147,7 @@ public class SplashScreen extends AppCompatActivity {
                             Long id = (Long) events.get("id_event");
                             String name = (String) events.get("name_event");
                             String sdesc = (String) events.get("sdesc_event");
-                            sdesc = sdesc + " \n[ Czytaj dalej... ]";
+                            sdesc = sdesc + " \n[ Read more... ]";
                             String desc = (String) events.get("desc_event");
                             //Log.d(TAG, "ID: " + id + "Name: " + name + "Sdesc: " + sdesc + "desc: " + desc);
 
