@@ -394,7 +394,7 @@ public class LoginFragment extends Fragment {
         };
 
         // Adding request to request queue
-        int socketTimeout = 15000;
+        int socketTimeout = 5000;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
